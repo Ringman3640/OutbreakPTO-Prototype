@@ -16,24 +16,24 @@ public class MoveStateManager : MonoBehaviour
     public float bufferAcceptanceTime = 0.25f;
 
     // Block level properties
-    public string ControlBlockLevel
+    public ControlRestriction ControlBlockLevel
     {
         get
         {
             if (currentState == null)
             {
-                return "none";
+                return ControlRestriction.None;
             }
             return currentState.ControlBlockLevel;
         }
     }
-    public string AnimationBlockLevel
+    public AnimationRestriction AnimationBlockLevel
     {
         get
         {
             if (currentState == null)
             {
-                return "none";
+                return AnimationRestriction.None;
             }
             return currentState.AnimationBlockLevel;
         }
@@ -57,7 +57,12 @@ public class MoveStateManager : MonoBehaviour
     // Call this method in Update() if there is a MoveState
     public void Execute()
     {
-        if (currentState != null && currentState.completed)
+        if (currentState == null)
+        {
+            return;
+        }
+
+        if (currentState.completed)
         {
             CompleteCurrentState();
         }

@@ -49,6 +49,22 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    // Control and Animation restriction properties
+    public ControlRestriction ControlBlockLevel
+    {
+        get
+        {
+            return msm.ControlBlockLevel;
+        }
+    }
+    public AnimationRestriction AnimationBlockLevel
+    {
+        get
+        {
+            return msm.AnimationBlockLevel;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,21 +92,18 @@ public class PlayerManager : MonoBehaviour
         GetLookDirection();
 
         CheckActionInput();
-        if (!msm.Empty())
-        {
-            // TODO: check block levels
-            msm.Execute();
-            return;
-        }
+        msm.Execute();
 
         UpdateVelocity();
         UpdateSprite();
+
+        wc.UpdateWeaponState(lookDirection);
     }
 
     // Calculate moveDirection through the user's axis inputs
     private void GetMoveDirection()
     {
-        if (msm.ControlBlockLevel == "move" ||msm.ControlBlockLevel == "all")
+        if (ControlBlockLevel.HasFlag(ControlRestriction.Move))
         {
             return;
         }
@@ -104,7 +117,7 @@ public class PlayerManager : MonoBehaviour
     // Calculate lookDirection through the user's mouse position
     private void GetLookDirection()
     {
-        if (msm.ControlBlockLevel == "look" || msm.ControlBlockLevel == "all")
+        if (ControlBlockLevel.HasFlag(ControlRestriction.Look))
         {
             return;
         }
@@ -129,9 +142,13 @@ public class PlayerManager : MonoBehaviour
     // Update the player's velocity given the value of moveDirection
     private void UpdateVelocity()
     {
+        if (ControlBlockLevel.HasFlag(ControlRestriction.Move))
+        {
+            return;
+        }
+
         if (moveDirection == Vector3.zero)
         {
-            // play idle animation
             rb.velocity = Vector2.zero;
             return;
         }
@@ -142,39 +159,31 @@ public class PlayerManager : MonoBehaviour
     // Update the player's sprite animation for basic movement
     private void UpdateSprite()
     {
-        if (msm.AnimationBlockLevel == "all")
+        if (AnimationBlockLevel.HasFlag(AnimationRestriction.All))
         {
             return;
         }
 
         if (moveDirection == Vector3.zero)
         {
-            sm.Action = "idle";
+            sm.Action = AnimAction.Idle;
         }
         else
         {
-            sm.Action = "run";
+            sm.Action = AnimAction.Run;
         }
 
         sm.CalculateDirection(lookDirection);
 
-        if (msm.AnimationBlockLevel == "none")
+        if (!AnimationBlockLevel.HasFlag(AnimationRestriction.Top))
         {
-            sm.BodyPart = "topbottom";
+            sm.BodyPart = AnimBodyPart.Top;
+            sm.UpdateSprite();
         }
-        else if (msm.AnimationBlockLevel == "top")
+        if (!AnimationBlockLevel.HasFlag(AnimationRestriction.Bottom))
         {
-            sm.BodyPart = "bottom";
+            sm.BodyPart = AnimBodyPart.Bottom;
+            sm.UpdateSprite();
         }
-        else
-        {
-            sm.BodyPart = "top";
-        }
-
-        sm.UpdateSprite();
-
-        // TODO: Temp solution to weapon update, fix later
-        wc.SetDirection(lookDirection);
-        wc.SetOrientationFromDirection(lookDirection);
     }
 }

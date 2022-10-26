@@ -3,30 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+public enum AnimAction
+{
+    Null,
+    Idle,
+    Run,
+    Roll
+}
+
+public enum AnimDirection
+{
+    Null,
+    SideFront,
+    SideBack,
+    Front,
+    Back
+}
+public enum AnimBodyPart
+{
+    Null,
+    Full,
+    Top,
+    Bottom,
+    TopBottom
+}
+
 public class SpriteManager : MonoBehaviour
 {
-    // Defines the bodypart to play the animation
-    // "full"
-    // "top"
-    // "bottom"
-    // "topbottom"
-    public string BodyPart
-    {
-        get; set;
-    }
-
     // Action name of the animation
-    public string Action
+    public AnimAction Action
     {
         get; set;
     }
 
     // Direction name of the animation
-    public string Direction
+    public AnimDirection Direction
     {
         get; set;
     }
-    
+
+    // Defines the bodypart to play the animation
+    public AnimBodyPart BodyPart
+    {
+        get; set;
+    }
+
     // Indicate if the sprite should be X flipped
     public bool FlipX
     {
@@ -53,40 +74,40 @@ public class SpriteManager : MonoBehaviour
         bottomSM = transform.Find("Bottom").GetComponent<SubspriteManager>();
         Assert.IsNotNull(bottomSM);
 
-        BodyPart = "";
-        Action = "";
-        Direction = "";
+        BodyPart = AnimBodyPart.Null;
+        Action = AnimAction.Null;
+        Direction = AnimDirection.Null;
         FlipX = false;
     }
 
     // Update the sprite animation given the current animation descriptors
     public void UpdateSprite()
     {
-        string animationName = Action + "_" + Direction;
+        string animationName = Action.ToString().ToLower() + "_" + Direction.ToString().ToLower();
 
         switch(BodyPart)
         {
-            case "full":
+            case AnimBodyPart.Full:
                 fullSM.PlayAnimation("player_full_" + animationName, FlipX);
                 topSM.Disable();
                 bottomSM.Disable();
                 return;
 
-            case "top":
+            case AnimBodyPart.Top:
                 topSM.PlayAnimation("player_top_" + animationName, FlipX);
                 break;
 
-            case "bottom":
+            case AnimBodyPart.Bottom:
                 bottomSM.PlayAnimation("player_bottom_" + animationName, FlipX);
                 break;
 
-            case "topbottom":
+            case AnimBodyPart.TopBottom:
                 topSM.PlayAnimation("player_top_" + animationName, FlipX);
                 bottomSM.PlayAnimation("player_bottom_" + animationName, FlipX);
                 break;
 
+            case AnimBodyPart.Null:
             default:
-                Debug.LogError("SpriteManager: Trying to play animation on invalid BodyPart: " + BodyPart);
                 return;
         }
 
@@ -96,20 +117,20 @@ public class SpriteManager : MonoBehaviour
     // Play a specific animation
     public void PlayAnimation(string animationName)
     {
-        if (animationName.Contains("full"))
+        if (animationName.Contains("_full_"))
         {
             fullSM.PlayAnimation(animationName, FlipX);
             topSM.Disable();
             bottomSM.Disable();
             return;
         }
-        if (animationName.Contains("top"))
+        if (animationName.Contains("_top_"))
         {
             topSM.PlayAnimation(animationName, FlipX);
             fullSM.Disable();
             return;
         }
-        if (animationName.Contains("bottom"))
+        if (animationName.Contains("_bottom_"))
         {
             bottomSM.PlayAnimation(animationName, FlipX);
             fullSM.Disable();
@@ -124,22 +145,22 @@ public class SpriteManager : MonoBehaviour
         {
             if (directionVector.y > 0)
             {
-                Direction = "back";
+                Direction = AnimDirection.Back;
             }
             else
             {
-                Direction = "front";
+                Direction = AnimDirection.Front;
             }
         }
         else
         {
             if (directionVector.y > 0)
             {
-                Direction = "sideback";
+                Direction = AnimDirection.SideBack;
             }
             else
             {
-                Direction = "sidefront";
+                Direction = AnimDirection.SideFront;
             }
         }
 

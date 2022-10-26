@@ -11,8 +11,8 @@ public class RollState : MoveState
     
     public RollState(float rollSpeed = DEFAULT_SPEED)
     {
-        ControlBlockLevel = "all";
-        AnimationBlockLevel = "all";
+        ControlBlockLevel = ControlRestriction.All;
+        AnimationBlockLevel = AnimationRestriction.All;
 
         started = false;
         speed = rollSpeed;
@@ -45,8 +45,8 @@ public class RollState : MoveState
         }
 
         sm.CalculateDirection(moveDirection);
-        sm.Action = "roll";
-        sm.BodyPart = "full";
+        sm.Action = AnimAction.Roll;
+        sm.BodyPart = AnimBodyPart.Full;
         sm.UpdateSprite();
     }
 }

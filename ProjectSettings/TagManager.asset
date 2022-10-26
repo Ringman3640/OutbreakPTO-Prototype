@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PlayerProjectile
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -11,9 +13,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Projectile
+  - Obstacle
+  - Hittable
   - 
   - 
   - 
@@ -47,6 +49,9 @@ TagManager:
   - name: Terrain
     uniqueID: 3380947315
     locked: 0
-  - name: Interactable
+  - name: Active
     uniqueID: 2232105411
+    locked: 0
+  - name: Projectiles
+    uniqueID: 3418516865
     locked: 0

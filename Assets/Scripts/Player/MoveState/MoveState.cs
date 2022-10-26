@@ -7,6 +7,26 @@ using UnityEngine.Assertions;
 //     - Define ControlBlockLevel and AnimationBlockLevel
 //     - Implement Execute()
 
+[System.Flags]
+public enum ControlRestriction
+{
+    None        = 0,
+    All         = ~0,
+    Move        = (1 << 0),
+    Look        = (1 << 1),
+    Shoot       = (1 << 2),
+    HoldWeapon  = (1 << 3)
+}
+
+[System.Flags]
+public enum AnimationRestriction
+{
+    None    = 0,
+    All     = ~0,
+    Top     = (1 << 0),
+    Bottom  = (1 << 1),
+}
+
 public abstract class MoveState
 {
     // Indicate if the MoveState has completed execution
@@ -16,21 +36,13 @@ public abstract class MoveState
     }
 
     // Player control block level
-    // "move"
-    // "look"
-    // "all"
-    // "none"
-    public string ControlBlockLevel
+    public ControlRestriction ControlBlockLevel
     {
         get; protected set;
     }
 
     // Sprite animation block level
-    // "top"
-    // "bottom"
-    // "all"
-    // "none"
-    public string AnimationBlockLevel
+    public AnimationRestriction AnimationBlockLevel
     {
         get; protected set;
     }

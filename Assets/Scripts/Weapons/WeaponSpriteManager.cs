@@ -75,7 +75,7 @@ public class WeaponSpriteManager : MonoBehaviour
 
     public void PlayFireAnim()
     {
-        anim.Play(weaponName + "_fire");
+        anim.Play(weaponName + "_fire", -1, 0f);
     }
 
     public void FinishFireAnim()
