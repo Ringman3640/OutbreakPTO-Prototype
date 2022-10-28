@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PlayerProjectile
   - Obstacle
+  - Weapon
+  - Weapon Inventory
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - Projectile
   - Obstacle
   - Hittable
-  - 
+  - Interaction
   - 
   - 
   - 

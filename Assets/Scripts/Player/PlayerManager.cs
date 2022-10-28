@@ -5,6 +5,13 @@ using UnityEngine.Assertions;
 
 public class PlayerManager : MonoBehaviour
 {
+    // Component references
+    public Rigidbody2D rb;
+    public SpriteManager sm;
+    public MoveStateManager msm;
+    public WeaponInventoryManager wim;
+    public PlayerInteractManager pim;
+
     // Speed of character
     public float movementSpeed = 4f;
 
@@ -14,39 +21,45 @@ public class PlayerManager : MonoBehaviour
     private Vector3 lookDirection;
     private Vector3 pointPosition;
 
-    // Component references
-    public Rigidbody2D rb
+    // Player component properties
+    public Rigidbody2D Rigidbody
     {
-        get; set;
+        get { return rb; } 
+        set { rb = value; }
     }
-    public SpriteManager sm
+    public SpriteManager Sprite
     {
-        get; set;
+        get { return sm; }
+        set { sm = value; }
     }
-    private MoveStateManager msm;
-    private WeaponController wc;
+    public MoveStateManager MoveState
+    {
+        get { return msm; }
+        set { msm = value; }
+    }
+    public WeaponInventoryManager WeaponInventory
+    {
+        get { return wim; }
+        set { wim = value; }
+    }
+    public PlayerInteractManager Interactions
+    {
+        get { return pim; }
+        set { pim = value; }
+    }
 
     // Directional and positional vector properties
     public Vector3 MoveDirection
     {
-        get
-        {
-            return moveDirection;
-        }
+        get { return moveDirection; }
     }
     public Vector3 LookDirection
     {
-        get
-        {
-            return lookDirection;
-        }
+        get { return lookDirection; }
     }
     public Vector3 PointPosition
     {
-        get
-        {
-            return pointPosition;
-        }
+        get { return pointPosition; }
     }
 
     // Control and Animation restriction properties
@@ -66,19 +79,12 @@ public class PlayerManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         Assert.IsNotNull(rb);
-
-        sm = transform.Find("Move Offsetted/Sprite").GetComponent<SpriteManager>();
         Assert.IsNotNull(sm);
-
-        msm = GetComponent<MoveStateManager>();
         Assert.IsNotNull(msm);
-
-        wc = transform.Find("Move Offsetted/Weapon").GetComponent<WeaponController>();
-        Assert.IsNotNull(wc);
+        Assert.IsNotNull(wim);
 
         moveDirection = Vector3.zero;
         lookDirection = Vector3.zero;
@@ -97,7 +103,7 @@ public class PlayerManager : MonoBehaviour
         UpdateVelocity();
         UpdateSprite();
 
-        wc.UpdateWeaponState(lookDirection);
+        wim.UpdateCurrentWeaponState();
     }
 
     // Calculate moveDirection through the user's axis inputs
@@ -136,6 +142,14 @@ public class PlayerManager : MonoBehaviour
             msm.AddMoveState(new RollState());
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            pim.Interact();
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            wim.RemoveCurrentWeapon();
+        }
         // stub
     }
 

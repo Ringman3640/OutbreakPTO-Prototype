@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 public enum WeaponOrientation
 {
+    Invalid,
     RightFront,
     RightBack,
     Front,
@@ -13,15 +14,13 @@ public enum WeaponOrientation
     LeftBack
 }
 
-public class WeaponController : MonoBehaviour
+public class WeaponEquippedController : MonoBehaviour
 {
-    public string weaponName = null;
-    public GameObject projectile = null;
-    public GameObject muzzleFlash = null;
-    public float rateOfFire = 0.2f;
-    public bool automaticFire = true;
-    public int ammoCapacity = 10;
-    public float frontBackRange = 0.4f;
+    public WeaponManager wm;
+    public WeaponSpriteManager wsm;
+    public Transform normalFirePoint;
+    public Transform flippedFirePoint;
+    private Transform projectileParent;
 
     private float lastFireTime;
     private int currAmmo;
@@ -29,12 +28,7 @@ public class WeaponController : MonoBehaviour
     private bool weaponEnabled;
     private WeaponOrientation orientation;
 
-    private Transform normalFirePoint;
-    private Transform flippedFirePoint;
-    private Transform projectileParent;
-
     private PlayerManager player;
-    private WeaponSpriteManager wsm;
 
     public bool WeaponEnabled
     {
@@ -62,24 +56,31 @@ public class WeaponController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        player = transform.parent.transform.parent.GetComponent<PlayerManager>();
-        Assert.IsNotNull(player);
-
-        wsm = transform.Find("Sprite").GetComponent<WeaponSpriteManager>();
+        Assert.IsNotNull(wm);
         Assert.IsNotNull(wsm);
-
-        normalFirePoint = transform.Find("Fire Points/Normal");
-        flippedFirePoint = transform.Find("Fire Points/Flipped");
         projectileParent = GameObject.Find("Projectiles").transform;
 
-        Assert.IsNotNull(weaponName);
-
-        weaponEnabled = false;
-        orientation = WeaponOrientation.RightFront;
         lastFireTime = 0;
-        currAmmo = ammoCapacity;
+        currAmmo = wm.ammoCapacity;
+
+        player = null;
+
+        Disable();
+    }
+
+    public void Initialize(PlayerManager inPlayer)
+    {
+        player = inPlayer;
+        Enable();
+        UpdateWeaponState(player.LookDirection);
+    }
+
+    public void Remove()
+    {
+        player = null;
+        Disable();
     }
 
     public void UpdateWeaponState(Vector3 pointDirection)
@@ -103,7 +104,7 @@ public class WeaponController : MonoBehaviour
             return;
         }
 
-        if (automaticFire && Input.GetKey(KeyCode.Mouse0))
+        if (wm.automaticFire && Input.GetKey(KeyCode.Mouse0))
         {
             Fire();
         }
@@ -115,32 +116,41 @@ public class WeaponController : MonoBehaviour
 
     public bool Fire()
     {
-        if (projectile == null || muzzleFlash == null)
+        if (wm.projectile == null)
         {
-            Debug.LogError("WeaponController: Projectile or Muzzle Flash not initialized");
+            Debug.LogError("WeaponController: Projectile not initialized");
             return false;
         }
 
-        if (Time.time - lastFireTime < rateOfFire || currAmmo <= 0)
+        // Check rate of fire and ammo
+        if (Time.time - lastFireTime < wm.rateOfFire || currAmmo <= 0)
         {
             return false;
         }
         
-        GameObject bullet = Instantiate(projectile);
-        GameObject flash = Instantiate(muzzleFlash);
-        
+        // Get target transform of bullet
+        Transform targTransform;
         if (wsm.Flipped)
         {
-            bullet.transform.position = flippedFirePoint.position;
-            flash.transform.position = flippedFirePoint.position;
+            targTransform = flippedFirePoint;
         }
         else
         {
-            bullet.transform.position = normalFirePoint.position;
-            flash.transform.position = normalFirePoint.position;
+            targTransform = normalFirePoint;
         }
+
+        // Spawn bullet projectile
+        GameObject bullet = Instantiate(wm.projectile);
+        bullet.transform.position = targTransform.position;
         bullet.transform.right = transform.right;
         bullet.transform.parent = projectileParent;
+
+        // Spawn muzzle flash effect if provided
+        if (wm.muzzleFlash != null)
+        {
+            GameObject flash = Instantiate(wm.muzzleFlash);
+            flash.transform.position = targTransform.position;
+        }
 
         lastFireTime = Time.time;
         --currAmmo;
@@ -155,7 +165,7 @@ public class WeaponController : MonoBehaviour
         // Update orientation
         if (direction.y > 0)
         {
-            if (Mathf.Abs(direction.x) <= frontBackRange)
+            if (Mathf.Abs(direction.x) <= wm.frontBackRange)
             {
                 SetOrientation(WeaponOrientation.Back);
             }
@@ -170,7 +180,7 @@ public class WeaponController : MonoBehaviour
         }
         else
         {
-            if (Mathf.Abs(direction.x) <= frontBackRange)
+            if (Mathf.Abs(direction.x) <= wm.frontBackRange)
             {
                 SetOrientation(WeaponOrientation.Front);
             }
@@ -210,6 +220,7 @@ public class WeaponController : MonoBehaviour
     public void Disable()
     {
         weaponEnabled = false;
+        orientation = WeaponOrientation.Invalid;
         wsm.Visible = false;
     }
 }
