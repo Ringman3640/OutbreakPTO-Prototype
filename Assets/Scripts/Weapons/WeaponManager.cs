@@ -9,30 +9,39 @@ public class WeaponManager : MonoBehaviour
     public string weaponName = null;
     public GameObject projectile = null;
     public GameObject muzzleFlash = null;
+    public float inaccuracyAngle = 5f;
+    public float projectileSpeed = 75f;
+    public float projectileMaxDist = 100f;
+    public float baseDamage = 10;
     public float rateOfFire = 0.2f;
     public bool automaticFire = true;
+    public bool projectilePenetration = false;
     public int ammoCapacity = 10;
     public float frontBackRange = 0.4f;
 
+    public SpriteRenderer sr = null;
+    public WeaponEquippedController wec = null;
     public GameObject equippedState = null;
     public GameObject unequippedState = null;
     public GameObject worldWeaponStorage = null;
+    public GameObject worldProjectileStorage = null;
 
     private bool equipped;
+    private Sprite unequippedSprite;
+    private PlayerManager player;
 
     public bool Equipped
     {
         get { return equipped; }
     }
 
-    private PlayerManager player;
-    private WeaponEquippedController wec;
-
     // Start is called before the first frame update
     void Start()
     {
         Assert.IsNotNull(weaponName);
         Assert.IsNotNull(projectile);
+        Assert.IsNotNull(sr);
+        Assert.IsNotNull(wec);
         Assert.IsNotNull(equippedState);
         Assert.IsNotNull(unequippedState);
 
@@ -42,6 +51,7 @@ public class WeaponManager : MonoBehaviour
         Assert.IsNotNull(wec);
 
         equipped = false;
+        unequippedSprite = sr.sprite;
     }
 
     public void UpdateWeaponState(Vector3 pointDirection)
@@ -68,6 +78,7 @@ public class WeaponManager : MonoBehaviour
 
         equippedState.SetActive(true);
         unequippedState.SetActive(false);
+        sr.sprite = null;
 
         wec.Initialize(player);
 
@@ -94,7 +105,28 @@ public class WeaponManager : MonoBehaviour
         wec.Remove();
         equippedState.SetActive(false);
         unequippedState.SetActive(true);
+        sr.sprite = unequippedSprite;
 
         equipped = false;
+    }
+
+    public void Enable()
+    {
+        if (!equipped)
+        {
+            return;
+        }
+
+        wec.Enable();
+    }
+
+    public void Disable()
+    {
+        if (!equipped)
+        {
+            return;
+        }
+
+        wec.Disable();
     }
 }

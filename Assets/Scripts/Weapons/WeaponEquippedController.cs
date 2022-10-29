@@ -20,7 +20,6 @@ public class WeaponEquippedController : MonoBehaviour
     public WeaponSpriteManager wsm;
     public Transform normalFirePoint;
     public Transform flippedFirePoint;
-    private Transform projectileParent;
 
     private float lastFireTime;
     private int currAmmo;
@@ -60,7 +59,6 @@ public class WeaponEquippedController : MonoBehaviour
     {
         Assert.IsNotNull(wm);
         Assert.IsNotNull(wsm);
-        projectileParent = GameObject.Find("Projectiles").transform;
 
         lastFireTime = 0;
         currAmmo = wm.ammoCapacity;
@@ -142,14 +140,37 @@ public class WeaponEquippedController : MonoBehaviour
         // Spawn bullet projectile
         GameObject bullet = Instantiate(wm.projectile);
         bullet.transform.position = targTransform.position;
-        bullet.transform.right = transform.right;
-        bullet.transform.parent = projectileParent;
+        if (wm.worldProjectileStorage != null)
+        {
+            bullet.transform.parent = wm.worldProjectileStorage.transform;
+        }
+
+        // Set bullet trajectory with inacurracy
+        float inacurracyAngle = Random.Range(-wm.inaccuracyAngle / 2, wm.inaccuracyAngle / 2);
+        bullet.transform.right = Quaternion.AngleAxis(inacurracyAngle, Vector3.forward) * transform.right;
+
+        // Override bullset settings with weapon settings
+        ProjectileController bulletSettings = bullet.GetComponent<ProjectileController>();
+        bulletSettings.speed = wm.projectileSpeed;
+        bulletSettings.maxDistance = wm.projectileMaxDist;
+        bulletSettings.penetrateThrough = wm.projectilePenetration;
 
         // Spawn muzzle flash effect if provided
         if (wm.muzzleFlash != null)
         {
             GameObject flash = Instantiate(wm.muzzleFlash);
             flash.transform.position = targTransform.position;
+
+            // Set far light component of muzzle flash to player ground level
+            // (Makes shadows look properly aligned)
+            flash.GetComponent<MuzzleFlashController>().farLight.transform.position 
+                    = player.transform.position + transform.right;
+
+            // Set parent if given
+            if (wm.worldProjectileStorage != null)
+            {
+                flash.transform.parent = wm.worldProjectileStorage.transform;
+            }
         }
 
         lastFireTime = Time.time;

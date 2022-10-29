@@ -38,14 +38,17 @@ public class WeaponInventoryManager : MonoBehaviour
         if (current == null)
         {
             current = weaponList.First;
+            EnableCurrent();
             return;
         }
 
+        DisableCurrent();
         current = current.Next;
         if (current == null)
         {
             current = weaponList.First;
         }
+        EnableCurrent();
     }
 
     // Rotate the current weapon to the previous weapon
@@ -54,14 +57,17 @@ public class WeaponInventoryManager : MonoBehaviour
         if (current == null)
         {
             current = weaponList.First;
+            EnableCurrent();
             return;
         }
 
+        DisableCurrent();
         current = current.Previous;
         if (current == null)
         {
             current = weaponList.Last;
         }
+        EnableCurrent();
     }
 
     // Add a weapon to the inventory 
@@ -76,16 +82,18 @@ public class WeaponInventoryManager : MonoBehaviour
         if (weaponList.Count < weaponSlots)
         {
             weaponList.AddLast(weapon);
+            DisableCurrent();
             current = weaponList.Last;
             current.Value.GetComponent<WeaponManager>().Equip(gameObject);
         }
         else
         {
-            Debug.Log(current);
+            DisableCurrent();
             current.Value.GetComponent<WeaponManager>().Unequip();
             current.Value = weapon;
             current.Value.GetComponent<WeaponManager>().Equip(gameObject);
         }
+        EnableCurrent();
 
         return true;
     }
@@ -104,6 +112,7 @@ public class WeaponInventoryManager : MonoBehaviour
             current = null;
             weaponList.Remove(weapon);
             current = weaponList.First;
+            EnableCurrent();
             return;
         }
 
@@ -126,5 +135,26 @@ public class WeaponInventoryManager : MonoBehaviour
         current.Value.GetComponent<WeaponManager>().Unequip();
         weaponList.Remove(current);
         current = weaponList.First;
+        EnableCurrent();
+    }
+
+    private void EnableCurrent()
+    {
+        if (current == null || current.Value == null)
+        {
+            return;
+        }
+
+        current.Value.GetComponent<WeaponManager>().Enable();
+    }
+
+    private void DisableCurrent()
+    {
+        if (current == null || current.Value == null)
+        {
+            return;
+        }
+
+        current.Value.GetComponent<WeaponManager>().Disable();
     }
 }
