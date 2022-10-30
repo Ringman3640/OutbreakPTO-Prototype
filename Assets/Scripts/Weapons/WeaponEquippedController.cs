@@ -102,11 +102,11 @@ public class WeaponEquippedController : MonoBehaviour
             return;
         }
 
-        if (wm.automaticFire && Input.GetKey(KeyCode.Mouse0))
+        if (wm.automaticFire && Input.GetButton("Shoot"))
         {
             Fire();
         }
-        else if (Input.GetKeyDown(KeyCode.Mouse0))
+        else if (Input.GetButtonDown("Shoot"))
         {
             Fire();
         }

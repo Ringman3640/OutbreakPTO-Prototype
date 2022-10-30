@@ -5,14 +5,12 @@ using UnityEngine.Assertions;
 
 public class DoorController : Interactable
 {
-    public GameObject leftDoor;
-    public GameObject rightDoor;
-    public float doorOpenSpeed = 4f;
-    public float doorOpenDist = 0.625f;
+    public Animator anim;
     public bool startLocked = false;
+    public bool toggleClose = false;
 
     private bool locked;
-    private float totalOpenDist;
+    private bool opened;
 
     public bool Locked
     {
@@ -23,33 +21,10 @@ public class DoorController : Interactable
     // Start is called before the first frame update
     void Awake()
     {
-        Assert.IsNotNull(leftDoor);
-        Assert.IsNotNull(rightDoor);
+        Assert.IsNotNull(anim);
 
         locked = startLocked;
-        totalOpenDist = 0;
-        enabled = false;
-    }
-
-    void Update()
-    {
-        if (totalOpenDist >= doorOpenDist)
-        {
-            enabled = false;
-            return;
-        }
-
-        float moveDist = doorOpenSpeed * Time.deltaTime;
-        if (totalOpenDist + moveDist > doorOpenDist)
-        {
-            moveDist = doorOpenDist - totalOpenDist;
-        }
-        totalOpenDist += moveDist;
-
-        Vector3 positionOffset = Vector3.zero;
-        positionOffset.x = moveDist;
-        rightDoor.transform.localPosition += positionOffset;
-        leftDoor.transform.localPosition -= positionOffset;
+        opened = false;
     }
 
     public override void Interact()
@@ -59,6 +34,37 @@ public class DoorController : Interactable
             return;
         }
 
-        enabled = true;
+        if (!opened)
+        {
+            anim.Play("metal_door_opening");
+            opened = true;
+        }
+        else if (toggleClose)
+        {
+            anim.Play("metal_door_closing");
+            opened = false;
+        }
+    }
+
+    public void Open()
+    {
+        if (opened)
+        {
+            return;
+        }
+
+        anim.Play("metal_door_opening");
+        opened = true;
+    }
+
+    public void Close()
+    {
+        if (!opened)
+        {
+            return;
+        }
+
+        anim.Play("metal_door_closing");
+        opened = false;
     }
 }

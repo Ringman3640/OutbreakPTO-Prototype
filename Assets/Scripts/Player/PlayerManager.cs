@@ -137,19 +137,26 @@ public class PlayerManager : MonoBehaviour
     // Check for User inputs to perform player actions
     private void CheckActionInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Roll"))
         {
             msm.AddMoveState(new RollState());
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetButtonDown("Interact"))
         {
             pim.Interact();
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+
+        float scroll = Input.GetAxisRaw("Mouse ScrollWheel");
+        if (scroll > 0f)
         {
-            wim.RemoveCurrentWeapon();
+            wim.RotateNextWeapon();
         }
+        else if (scroll < 0f)
+        {
+            wim.RotatePrevWeapon();
+        }
+
         // stub
     }
 
