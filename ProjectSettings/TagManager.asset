@@ -8,6 +8,7 @@ TagManager:
   - Obstacle
   - Weapon
   - Weapon Inventory
+  - Interactor
   layers:
   - Default
   - TransparentFX
@@ -56,4 +57,7 @@ TagManager:
     locked: 0
   - name: Projectiles
     uniqueID: 3418516865
+    locked: 0
+  - name: Ceiling
+    uniqueID: 2842834433
     locked: 0

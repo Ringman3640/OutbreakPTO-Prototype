@@ -50,10 +50,17 @@ public class PlayerInteractManager : MonoBehaviour
                 player.WeaponInventory.AddWeapon(weaponRoot);
                 return;
 
+            case "Interactor":
+                GameObject target = interaction.Value;
+                interactables.Remove(interaction);
+                target.GetComponent<Interactor>().Interact();
+                return;
+
             default:
                 break;
         }
 
+        Debug.Log("Unknown interaction of tag " + interaction.Value.tag);
         interactables.Remove(interaction);
     }
 

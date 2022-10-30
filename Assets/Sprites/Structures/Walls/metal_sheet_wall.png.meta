@@ -215,8 +215,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9aaa5f5c836fe6f49a464bb45d5d4a81
-      internalID: 1493525045
+      spriteID: c02c3260f03c1f948a7ff5f65710f0ed
+      internalID: 1003983142
       vertices: []
       indices: 
       edges: []
@@ -236,8 +236,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe0303685aa954b45b217fd1971b949e
-      internalID: -630051514
+      spriteID: 655af5fa221a98540a280dfe336995eb
+      internalID: 1260741839
       vertices: []
       indices: 
       edges: []
@@ -257,8 +257,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 427a8cec004f2c14e92a4fbe51f85e1d
-      internalID: -1112121209
+      spriteID: 9912df997b2f9bc40bb30ef6624c098c
+      internalID: 385905556
       vertices: []
       indices: 
       edges: []
@@ -278,8 +278,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34b4855311b2beb45955df7eda76e43e
-      internalID: -1144630078
+      spriteID: cd45be83b381f35489101f1a0f03223e
+      internalID: 648969447
       vertices: []
       indices: 
       edges: []
@@ -295,14 +295,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      metal_sheet_wall_7: -1144630078
+      metal_sheet_wall_7: 648969447
       metal_sheet_wall_0: 1962430244
       metal_sheet_wall_3: 2142625711
-      metal_sheet_wall_5: -630051514
+      metal_sheet_wall_5: 1260741839
       metal_sheet_wall_1: 201722308
       metal_sheet_wall_2: -1266107080
-      metal_sheet_wall_6: -1112121209
-      metal_sheet_wall_4: 1493525045
+      metal_sheet_wall_6: 385905556
+      metal_sheet_wall_4: 1003983142
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
