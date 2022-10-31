@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 public class DoorController : Interactable
 {
     public Animator anim;
+    public string doorName;
     public bool startLocked = false;
     public bool toggleClose = false;
 
@@ -22,6 +23,7 @@ public class DoorController : Interactable
     void Awake()
     {
         Assert.IsNotNull(anim);
+        Assert.IsNotNull(doorName);
 
         locked = startLocked;
         opened = false;
@@ -36,12 +38,12 @@ public class DoorController : Interactable
 
         if (!opened)
         {
-            anim.Play("metal_door_opening");
+            anim.Play(doorName + "_opening");
             opened = true;
         }
         else if (toggleClose)
         {
-            anim.Play("metal_door_closing");
+            anim.Play(doorName + "_closing");
             opened = false;
         }
     }
@@ -53,7 +55,7 @@ public class DoorController : Interactable
             return;
         }
 
-        anim.Play("metal_door_opening");
+        anim.Play(doorName + "_opening");
         opened = true;
     }
 
@@ -64,7 +66,7 @@ public class DoorController : Interactable
             return;
         }
 
-        anim.Play("metal_door_closing");
+        anim.Play(doorName + "_closing");
         opened = false;
     }
 }
