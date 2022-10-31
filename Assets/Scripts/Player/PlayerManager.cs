@@ -157,6 +157,12 @@ public class PlayerManager : MonoBehaviour
             wim.RotatePrevWeapon();
         }
 
+        // TEMP FOR TESTING ONLY
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         // stub
     }
 

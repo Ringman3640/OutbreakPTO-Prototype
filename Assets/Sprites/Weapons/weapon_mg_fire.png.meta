@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b7f532f20722c034e83fb953f5656b0f
-      internalID: -467902474
+      spriteID: 6c81b802e3c67614fb2ed8d87bdcb4d9
+      internalID: 323359156
       vertices: []
       indices: 
       edges: []
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d896719047277604ba7dc3881d011253
-      internalID: 458031931
+      spriteID: 36262b1376133784d817d09c2ffb20ac
+      internalID: -1922712453
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b89fbce638010b242a5d363c75109966
-      internalID: 129171057
+      spriteID: a7450651853072048b3f1de066c16c39
+      internalID: -719280268
       vertices: []
       indices: 
       edges: []
@@ -194,8 +194,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 531ac47c1299c07479c8bc1933c1a430
-      internalID: -1941197784
+      spriteID: 0fba0db83a3592044a06010d373c30ae
+      internalID: 589108420
       vertices: []
       indices: 
       edges: []
@@ -211,10 +211,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      weapon_mg_fire_0: -467902474
-      weapon_mg_fire_3: -1941197784
-      weapon_mg_fire_1: 458031931
-      weapon_mg_fire_2: 129171057
+      weapon_mg_fire_0: 323359156
+      weapon_mg_fire_3: 589108420
+      weapon_mg_fire_1: -1922712453
+      weapon_mg_fire_2: -719280268
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
