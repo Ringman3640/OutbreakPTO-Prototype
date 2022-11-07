@@ -109,10 +109,7 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     void changeHealth(float dmg){
-        health = health - dmg;
-        if(health <= 0){
-            this.destroy;
-        }
+       
     }
 
 }
