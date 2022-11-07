@@ -18,7 +18,7 @@ TagManager:
   - UI
   - Projectile
   - Obstacle
-  - Hittable
+  - Hitbox
   - Interaction
   - 
   - 
