@@ -152,6 +152,7 @@ public class WeaponEquippedController : MonoBehaviour
         // Override bullset settings with weapon settings
         ProjectileController bulletSettings = bullet.GetComponent<ProjectileController>();
         bulletSettings.speed = wm.projectileSpeed;
+        bulletSettings.damage = wm.baseDamage; // todo: add damage multiplier when added
         bulletSettings.maxDistance = wm.projectileMaxDist;
         bulletSettings.penetrateThrough = wm.projectilePenetration;
 

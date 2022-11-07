@@ -11,6 +11,7 @@ public class ProjectileController : MonoBehaviour
     public GameObject impactEffect;
 
     public float speed = 50f;
+    public float damage = 10f;
     public float maxDistance = 50f;
     public float height = 0.5f;
     public bool penetrateThrough = false;
@@ -18,8 +19,9 @@ public class ProjectileController : MonoBehaviour
     private float totalDist;
     private bool mainColliderHit;
     private bool baseColliderHit;
-    private int raycastMask;
-
+    private int raycastMainMask;
+    private int raycastBaseMask;
+    private GameObject prevDamaged;
 
     public bool BaseColliderHit
     {
@@ -35,7 +37,9 @@ public class ProjectileController : MonoBehaviour
         totalDist = 0;
         mainColliderHit = false;
         baseColliderHit = false;
-        raycastMask = (1 << LayerMask.NameToLayer("Obstacle")) | (1 << LayerMask.NameToLayer("Hitbox"));
+        raycastMainMask = (1 << LayerMask.NameToLayer("Obstacle")) | (1 << LayerMask.NameToLayer("Hitbox"));
+        raycastBaseMask = (1 << LayerMask.NameToLayer("Obstacle"));
+        prevDamaged = null;
 
         Vector3 baseColliderPos = transform.position;
         baseColliderPos.y -= height;
@@ -46,36 +50,82 @@ public class ProjectileController : MonoBehaviour
     void Update()
     {
         float travelDist = speed * Time.deltaTime;
-        RaycastHit2D hitInfoMain = Physics2D.Raycast(transform.position, transform.right, travelDist, raycastMask);
-        RaycastHit2D hitInfoBase = bcm.GetRaycast(travelDist, raycastMask);
+        RaycastHit2D hitInfoMain = Physics2D.Raycast(transform.position, transform.right, travelDist, raycastMainMask);
+        RaycastHit2D hitInfoBase = bcm.GetRaycast(travelDist, raycastBaseMask);
 
         // Check collisions
-        if (hitInfoMain.collider != null && !mainColliderHit)
+        //if (hitInfoMain.collider != null && !mainColliderHit)
+        //{
+        //    if (hitInfoMain.collider.tag == "Hittable")
+        //    {
+        //        if (!penetrateThrough || baseColliderHit)
+        //        {
+        //            CreateImpact(hitInfoMain);
+        //            return;
+        //        }
+
+        //        // todo: call hittable collider's hit funtion
+
+        //        mainColliderHit = true;
+        //    }
+        //    else if (hitInfoMain.collider.tag == "Obstacle")
+        //    {
+        //        if (baseColliderHit)
+        //        {
+        //            CreateImpact(hitInfoMain);
+        //            return;
+        //        }
+        //        mainColliderHit = true;
+        //    }
+        //}
+
+        //if (hitInfoBase.collider != null && hitInfoBase.collider.tag == "Obstacle" && !baseColliderHit)
+        //{
+        //    baseColliderHit = true;
+
+        //    if (mainColliderHit)
+        //    {
+        //        CreateImpact(hitInfoBase);
+        //        return;
+        //    }
+        //}
+
+        // Check main collider
+        if (hitInfoMain.collider != null)
         {
-            if (hitInfoMain.collider.tag == "Hittable")
+            if (hitInfoMain.collider.gameObject.HasTag("Damageable") && hitInfoMain.collider.gameObject != prevDamaged)
             {
-                if (!penetrateThrough || baseColliderHit)
+                // Destroy collide if tag is projectile blocking or bullet cannot penetrate
+                if (hitInfoMain.collider.gameObject.HasTag("ProjectileBlocking") || !penetrateThrough)
                 {
                     CreateImpact(hitInfoMain);
                     return;
                 }
 
-                // todo: call hittable collider's hit funtion
+                // Can damage through enemy
+                Hitbox targHitbox = hitInfoMain.collider.GetComponent<Hitbox>();
+                if (targHitbox != null)
+                {
+                    targHitbox.Hit(damage, gameObject);
+                    prevDamaged = hitInfoMain.collider.gameObject;
+                }
 
                 mainColliderHit = true;
             }
-            else if (hitInfoMain.collider.tag == "Obstacle")
+            else
             {
                 if (baseColliderHit)
                 {
                     CreateImpact(hitInfoMain);
                     return;
                 }
+
                 mainColliderHit = true;
             }
         }
 
-        if (hitInfoBase.collider != null && hitInfoBase.collider.tag == "Obstacle" && !baseColliderHit)
+        // Check base collider
+        if (hitInfoBase.collider != null && !baseColliderHit)
         {
             baseColliderHit = true;
 
@@ -99,7 +149,11 @@ public class ProjectileController : MonoBehaviour
     {
         transform.position += transform.right * hitInfo.distance;
 
-        // todo: call collider's hit function
+        Hitbox targHitbox = hitInfo.collider.GetComponent<Hitbox>();
+        if (targHitbox != null)
+        {
+            targHitbox.Hit(damage, gameObject);
+        }
 
         if (impactEffect != null)
         {

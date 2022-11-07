@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : Damageable
 {
     // Component references
     public Rigidbody2D rb;
@@ -14,6 +14,9 @@ public class PlayerManager : MonoBehaviour
 
     // Speed of character
     public float movementSpeed = 4f;
+
+    // Starting health
+    public float startHealth = 50f;
 
     // Directional vectors for movement and character looking
     // Position for current mouse position
@@ -89,6 +92,8 @@ public class PlayerManager : MonoBehaviour
         moveDirection = Vector3.zero;
         lookDirection = Vector3.zero;
         pointPosition = Vector3.zero;
+
+        PlayerSystem.Instance.SetPlayer(gameObject);
     }
 
     // Update is called once per frame
@@ -104,6 +109,12 @@ public class PlayerManager : MonoBehaviour
         UpdateSprite();
 
         wim.UpdateCurrentWeaponState();
+    }
+
+    // Damagable method implementation
+    public override void Damage(float damage)
+    {
+        // stub
     }
 
     // Calculate moveDirection through the user's axis inputs

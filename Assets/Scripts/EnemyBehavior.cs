@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehavior : MonoBehaviour
+public class EnemyBehavior : Damageable
 {
-
-    public GameObject player;
     public Animator animator;
     public Rigidbody2D rb;
+    public GameObject splatterEffect;
+
+    private GameObject player;
 
     public float speed;
     public float attackSpeed;
@@ -26,11 +27,14 @@ public class EnemyBehavior : MonoBehaviour
     private float attackDistance = 2f;
     private float distance = 0f;
     private bool directionLock = false;
-    private bool isAlive = true;
+
+    //private bool isAlive = true;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = PlayerSystem.Instance.GetPlayer();
+
         distance = Vector2.Distance(transform.position, player.transform.position);
         //attackSpeed = 1.5f;
         attackDirection = player.transform.position - transform.position;
@@ -39,6 +43,12 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        player = PlayerSystem.Instance.GetPlayer();
+        if (player == null)
+        {
+            return;
+        }
+
         distance = Vector2.Distance(transform.position, player.transform.position);
         updateDirection();
 
@@ -108,8 +118,33 @@ public class EnemyBehavior : MonoBehaviour
 
     }
 
-    void changeHealth(float dmg){
-       
+    // Damagable method implementations
+    public override void Damage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            // stub
+            // todo: Add death animation
+            Destroy(gameObject);
+        }
     }
+    public override void Damage(float damage, GameObject collider)
+    {
+        health -= damage;
 
+        if (splatterEffect != null)
+        {
+            GameObject effect = Instantiate(splatterEffect);
+            effect.transform.position = collider.transform.position;
+            effect.transform.right = collider.transform.right;
+        }
+
+        if (health <= 0)
+        {
+            // stub
+            // todo: Add death animation
+            Destroy(gameObject);
+        }
+    }
 }
