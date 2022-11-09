@@ -14,7 +14,7 @@ public class EnemyBehavior : Damageable
     public float attackSpeed;
     public float attackDuration;
 
-    public float health;
+    public int health;
     public bool attacking = false;
     public string direction = " "; 
 
@@ -31,8 +31,10 @@ public class EnemyBehavior : Damageable
     //private bool isAlive = true;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         player = PlayerSystem.Instance.GetPlayer();
 
         distance = Vector2.Distance(transform.position, player.transform.position);
@@ -119,19 +121,22 @@ public class EnemyBehavior : Damageable
     }
 
     // Damagable method implementations
-    public override void Damage(float damage)
+    public override void Kill()
     {
-        health -= damage;
+        // Stub, add death animation
+        Destroy(gameObject);
+    }
+    public override void Damage(HitboxData damageInfo)
+    {
+        health -= damageInfo.Damage;
         if (health <= 0)
         {
-            // stub
-            // todo: Add death animation
-            Destroy(gameObject);
+            Kill();
         }
     }
-    public override void Damage(float damage, GameObject collider)
+    public override void Damage(HitboxData damageInfo, GameObject collider)
     {
-        health -= damage;
+        health -= damageInfo.Damage;
 
         if (splatterEffect != null)
         {
@@ -142,9 +147,7 @@ public class EnemyBehavior : Damageable
 
         if (health <= 0)
         {
-            // stub
-            // todo: Add death animation
-            Destroy(gameObject);
+            Kill();
         }
     }
 }

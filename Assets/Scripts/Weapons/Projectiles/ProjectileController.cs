@@ -11,11 +11,14 @@ public class ProjectileController : MonoBehaviour
     public GameObject impactEffect;
 
     public float speed = 50f;
-    public float damage = 10f;
+    public int damage = 10;
+    public DamageType damageType = DamageType.Pierce;
+    public DamageResponse damageResponse = DamageResponse.Flinch;
     public float maxDistance = 50f;
     public float height = 0.5f;
     public bool penetrateThrough = false;
 
+    private HitboxData damageInfo;
     private float totalDist;
     private bool mainColliderHit;
     private bool baseColliderHit;
@@ -34,10 +37,11 @@ public class ProjectileController : MonoBehaviour
     {
         Assert.IsNotNull(bcm);
 
+        damageInfo = new(damage, damageType, damageResponse);
         totalDist = 0;
         mainColliderHit = false;
         baseColliderHit = false;
-        raycastMainMask = (1 << LayerMask.NameToLayer("Obstacle")) | (1 << LayerMask.NameToLayer("Hitbox"));
+        raycastMainMask = (1 << LayerMask.NameToLayer("Obstacle")) | (1 << LayerMask.NameToLayer("Hurtbox"));
         raycastBaseMask = (1 << LayerMask.NameToLayer("Obstacle"));
         prevDamaged = null;
 
@@ -103,10 +107,10 @@ public class ProjectileController : MonoBehaviour
                 }
 
                 // Can damage through enemy
-                Hitbox targHitbox = hitInfoMain.collider.GetComponent<Hitbox>();
+                Hurtbox targHitbox = hitInfoMain.collider.GetComponent<Hurtbox>();
                 if (targHitbox != null)
                 {
-                    targHitbox.Hit(damage, gameObject);
+                    targHitbox.Hit(damageInfo, gameObject);
                     prevDamaged = hitInfoMain.collider.gameObject;
                 }
 
@@ -149,10 +153,10 @@ public class ProjectileController : MonoBehaviour
     {
         transform.position += transform.right * hitInfo.distance;
 
-        Hitbox targHitbox = hitInfo.collider.GetComponent<Hitbox>();
+        Hurtbox targHitbox = hitInfo.collider.GetComponent<Hurtbox>();
         if (targHitbox != null)
         {
-            targHitbox.Hit(damage, gameObject);
+            targHitbox.Hit(damageInfo, gameObject);
         }
 
         if (impactEffect != null)

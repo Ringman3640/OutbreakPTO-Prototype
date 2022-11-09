@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 190071416596242977}
   - component: {fileID: 190071416596242982}
   - component: {fileID: 190071416596242979}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Unequipped State
   m_TagString: Weapon
   m_Icon: {fileID: 0}

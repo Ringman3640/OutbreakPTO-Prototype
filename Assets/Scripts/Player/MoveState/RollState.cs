@@ -47,6 +47,6 @@ public class RollState : MoveState
         sm.CalculateDirection(moveDirection);
         sm.Action = AnimAction.Roll;
         sm.BodyPart = AnimBodyPart.Full;
-        sm.UpdateSprite();
+        sm.PlaySequenceAnimation();
     }
 }

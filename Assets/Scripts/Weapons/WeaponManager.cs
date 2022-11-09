@@ -12,7 +12,7 @@ public class WeaponManager : MonoBehaviour
     public float inaccuracyAngle = 5f;
     public float projectileSpeed = 75f;
     public float projectileMaxDist = 100f;
-    public float baseDamage = 10;
+    public int baseDamage = 10;
     public float rateOfFire = 0.2f;
     public bool automaticFire = true;
     public bool projectilePenetration = false;

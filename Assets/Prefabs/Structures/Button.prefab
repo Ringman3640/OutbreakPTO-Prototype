@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 6619481350409781331}
   - component: {fileID: 6619481350409781341}
   - component: {fileID: 6619481350409781340}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Interact Collider
   m_TagString: Interactor
   m_Icon: {fileID: 0}

@@ -82,8 +82,10 @@ public class PlayerManager : Damageable
     }
 
     // Start is called before the first frame update
-    void Awake()
+    protected override void Start()
     {
+        base.Start();
+
         Assert.IsNotNull(rb);
         Assert.IsNotNull(sm);
         Assert.IsNotNull(msm);
@@ -112,9 +114,32 @@ public class PlayerManager : Damageable
     }
 
     // Damagable method implementation
-    public override void Damage(float damage)
+    public override void Kill()
     {
-        // stub
+        // stub, add death animations
+        Destroy(gameObject);
+    }
+    public override void Damage(HitboxData damageInfo)
+    {
+        currHealth -= damageInfo.Damage;
+
+        switch (damageInfo.Response)
+        {
+            case DamageResponse.Flinch:
+                sm.Action = AnimAction.Flinch;
+                sm.BodyPart = AnimBodyPart.Top;
+                sm.PlaySequenceAnimation();
+                break;
+
+            default:
+                // stub, add other responses
+                break;
+        }
+
+        if (currHealth <= 0)
+        {
+            Kill();
+        }
     }
 
     // Calculate moveDirection through the user's axis inputs
@@ -213,15 +238,19 @@ public class PlayerManager : Damageable
 
         sm.CalculateDirection(lookDirection);
 
-        if (!AnimationBlockLevel.HasFlag(AnimationRestriction.Top))
+        if (!AnimationBlockLevel.HasFlag(AnimationRestriction.Top) && !AnimationBlockLevel.HasFlag(AnimationRestriction.Bottom))
+        {
+            sm.BodyPart = AnimBodyPart.TopBottom;
+        }
+        else if (!AnimationBlockLevel.HasFlag(AnimationRestriction.Top))
         {
             sm.BodyPart = AnimBodyPart.Top;
-            sm.UpdateSprite();
         }
-        if (!AnimationBlockLevel.HasFlag(AnimationRestriction.Bottom))
+        else if (!AnimationBlockLevel.HasFlag(AnimationRestriction.Bottom))
         {
             sm.BodyPart = AnimBodyPart.Bottom;
-            sm.UpdateSprite();
         }
+
+        sm.UpdateState();
     }
 }
