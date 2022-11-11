@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3344092280df0374db91f0218d0a96c4
-      internalID: -152817650
+      spriteID: 5ea5292259e8ea7488451d7c57a65842
+      internalID: 754831049
       vertices: []
       indices: 
       edges: []
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 502ce2a34e88c904c889eef3d3019f1a
-      internalID: 1518083508
+      spriteID: 91e6f876dd7ad7d448eef35e88d12052
+      internalID: -1292953596
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8644d0b978207bf4a8c43487024af054
-      internalID: -453488555
+      spriteID: 9d7fdeb388ae4634a9d36e2b676399ce
+      internalID: -1929517087
       vertices: []
       indices: 
       edges: []
@@ -190,9 +190,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      player_top_flinch_sidefront_1: 1518083508
-      player_top_flinch_sidefront_0: -152817650
-      player_top_flinch_sidefront_2: -453488555
+      player_top_flinch_sidefront_1: -1292953596
+      player_top_flinch_sidefront_0: 754831049
+      player_top_flinch_sidefront_2: -1929517087
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

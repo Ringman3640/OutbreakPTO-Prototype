@@ -86,13 +86,23 @@ public class SpriteManager : MonoBehaviour
     private bool needsUpdate;
 
     // Component references
+    private SpriteEffects sEffects;
     private SubspriteManager fullSM;
     private SubspriteManager topSM;
     private SubspriteManager bottomSM;
 
+    // Properties
+    public SpriteEffects Effects
+    {
+        get { return sEffects; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        sEffects = GetComponent<SpriteEffects>();
+        Assert.IsNotNull(sEffects);
+
         fullSM = transform.Find("Full").GetComponent<SubspriteManager>();
         Assert.IsNotNull(fullSM);
 

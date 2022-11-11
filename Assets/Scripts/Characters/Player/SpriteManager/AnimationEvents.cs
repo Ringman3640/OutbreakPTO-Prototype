@@ -22,8 +22,13 @@ public class AnimationEvents : MonoBehaviour
         Assert.IsNotNull(msManager);
     }
 
-    public void CompleteState()
+    public void NofityState()
     {
-        msManager.CompleteCurrentState();
+        msManager.NofityCurrentState();
+    }
+
+    public void FinishState()
+    {
+        msManager.FinishCurrentState();
     }
 }

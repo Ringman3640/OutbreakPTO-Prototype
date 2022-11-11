@@ -10,9 +10,15 @@ public abstract class Damageable : MonoBehaviour
 
     protected int currHealth;
 
+    public bool Invincible
+    {
+        get; set;
+    }
+
     protected virtual void Start()
     {
         currHealth = maxHealth;
+        Invincible = false;
     }
 
     // Abstract Kill method
@@ -20,14 +26,19 @@ public abstract class Damageable : MonoBehaviour
     // Should be called from Damage() when currHealth <= 0
     public abstract void Kill();
 
-    // Abstract Damage method
+    // Abstract RecieveDamage method
     // Call for the Damagable object to take a certain amount of damage
-    public abstract void Damage(HitboxData damageInfo);
+    public abstract void RecieveDamage(HitboxData damageInfo, GameObject collider = null);
 
-    // Damage with reference to collider object
-    // If not overridden, will just call Damage(damage);
-    public virtual void Damage(HitboxData damageInfo, GameObject collider)
+    // Damage interface method
+    // Used by outside objects to signal for the Damageable class to be damaged
+    public virtual void Damage(HitboxData damageInfo, GameObject collider = null)
     {
-        Damage(damageInfo);
+        if (Invincible)
+        {
+            return;
+        }
+
+        RecieveDamage(damageInfo, collider);
     }
 }

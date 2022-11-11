@@ -119,16 +119,15 @@ public class PlayerManager : Damageable
         // stub, add death animations
         Destroy(gameObject);
     }
-    public override void Damage(HitboxData damageInfo)
+    public override void RecieveDamage(HitboxData damageInfo, GameObject collider = null)
     {
         currHealth -= damageInfo.Damage;
+        sm.Effects.PlayFlash();
 
         switch (damageInfo.Response)
         {
             case DamageResponse.Flinch:
-                sm.Action = AnimAction.Flinch;
-                sm.BodyPart = AnimBodyPart.Top;
-                sm.PlaySequenceAnimation();
+                msm.AddMoveState(new FlinchState());
                 break;
 
             default:

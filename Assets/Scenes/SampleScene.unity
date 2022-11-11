@@ -26009,7 +26009,7 @@ PrefabInstance:
     - target: {fileID: 47306666311847390, guid: b0ecb69a04ccd6b4083dcd7bf020338d, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 2080862269}
+      objectReference: {fileID: 1981239669}
     - target: {fileID: 47306666311847390, guid: b0ecb69a04ccd6b4083dcd7bf020338d, type: 3}
       propertyPath: m_InstanceId
       value: -1484
@@ -28018,7 +28018,7 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
---- !u!43 &2080862269
+--- !u!43 &1981239669
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

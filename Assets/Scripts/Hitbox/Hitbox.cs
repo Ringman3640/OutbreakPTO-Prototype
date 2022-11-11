@@ -7,6 +7,7 @@ public class Hitbox : MonoBehaviour
 {
     public bool startEnabled = true;
     public int damage = 10;
+    public DamageSource damageSource = DamageSource.Neutral;
     public DamageType damageType = DamageType.None;
     public DamageResponse damageReponse = DamageResponse.None;
 
@@ -29,7 +30,7 @@ public class Hitbox : MonoBehaviour
             c2d.enabled = false;
         }
 
-        data = new(damage, damageType, damageReponse);
+        data = new(damage, damageSource, damageType, damageReponse);
     }
 
     public void SetData(HitboxData newData)

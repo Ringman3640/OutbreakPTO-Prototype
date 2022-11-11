@@ -123,7 +123,7 @@ MonoBehaviour:
   - {x: 0.1559433, y: -0.12507851, z: 0}
   m_ShapePathHash: 1376537051
   m_Mesh: {fileID: 0}
-  m_InstanceId: 40702
+  m_InstanceId: 55308
 --- !u!1 &47306666442117368
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 47306667088119523}
   - component: {fileID: 47306667088119520}
+  - component: {fileID: 5534591911973106675}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -205,6 +206,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frontBackRange: 0.4
+--- !u!114 &5534591911973106675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47306667088119522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a7f77bdc1701941b127f8f016b1537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteList:
+  - {fileID: 47306667771707796}
+  - {fileID: 47306667233843325}
+  - {fileID: 47306667994254531}
+  defaultFlashColor: {r: 1, g: 0, b: 0, a: 1}
+  defaultFlashDuration: 0.1
 --- !u!1 &47306667136620428
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,6 +301,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageTarget: {fileID: 47306667882915545}
+  ignoreNeutral: 0
+  ignoreFriendly: 1
+  ignoreHostile: 0
 --- !u!1 &47306667233843326
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,7 +359,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: e3102ae3bc9ca9941a64ba347b9235c4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -578,7 +600,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: e3102ae3bc9ca9941a64ba347b9235c4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -879,7 +901,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: e3102ae3bc9ca9941a64ba347b9235c4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

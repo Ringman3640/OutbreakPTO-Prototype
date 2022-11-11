@@ -126,19 +126,11 @@ public class EnemyBehavior : Damageable
         // Stub, add death animation
         Destroy(gameObject);
     }
-    public override void Damage(HitboxData damageInfo)
-    {
-        health -= damageInfo.Damage;
-        if (health <= 0)
-        {
-            Kill();
-        }
-    }
-    public override void Damage(HitboxData damageInfo, GameObject collider)
+    public override void RecieveDamage(HitboxData damageInfo, GameObject collider = null)
     {
         health -= damageInfo.Damage;
 
-        if (splatterEffect != null)
+        if (collider != null && splatterEffect != null)
         {
             GameObject effect = Instantiate(splatterEffect);
             effect.transform.position = collider.transform.position;

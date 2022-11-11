@@ -62,9 +62,9 @@ public class MoveStateManager : MonoBehaviour
             return;
         }
 
-        if (currentState.completed)
+        if (currentState.Completed)
         {
-            CompleteCurrentState();
+            FinishCurrentState();
         }
 
         if (currentState != null)
@@ -95,16 +95,27 @@ public class MoveStateManager : MonoBehaviour
         return currentState;
     }
 
-    // Complete the current MoveState and remove it
-    // The buffered MoveState will be set to current if present and within the buffer time
-    public void CompleteCurrentState()
+    // Notify the current state about some event
+    public void NofityCurrentState()
     {
         if (currentState == null)
         {
             return;
         }
 
-        currentState.Completed();
+        currentState.Nofity();
+    }
+
+    // Finish the current MoveState and remove it
+    // The buffered MoveState will be set to current if present and within the buffer time
+    public void FinishCurrentState()
+    {
+        if (currentState == null)
+        {
+            return;
+        }
+
+        currentState.Finish();
 
         if (bufferState  == null)
         {

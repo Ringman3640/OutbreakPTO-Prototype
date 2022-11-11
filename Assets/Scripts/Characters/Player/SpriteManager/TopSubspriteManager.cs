@@ -14,8 +14,6 @@ public class TopSubspriteManager : SubspriteManager
     // Run base.PlayAnimation() and change sortingOrder based on animation direction
     public override void PlayAnimation(string action, string direction, bool flipX)
     {
-        Debug.Log(animNameLeader + "_" + action + "_" + direction);
-
         base.PlayAnimation(action, direction, flipX);
 
         if (direction.Contains("back"))

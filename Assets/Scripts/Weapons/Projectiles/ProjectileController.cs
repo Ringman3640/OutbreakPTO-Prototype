@@ -12,6 +12,7 @@ public class ProjectileController : MonoBehaviour
 
     public float speed = 50f;
     public int damage = 10;
+    public DamageSource damageSource = DamageSource.Neutral;
     public DamageType damageType = DamageType.Pierce;
     public DamageResponse damageResponse = DamageResponse.Flinch;
     public float maxDistance = 50f;
@@ -37,7 +38,7 @@ public class ProjectileController : MonoBehaviour
     {
         Assert.IsNotNull(bcm);
 
-        damageInfo = new(damage, damageType, damageResponse);
+        damageInfo = new(damage, damageSource, damageType, damageResponse);
         totalDist = 0;
         mainColliderHit = false;
         baseColliderHit = false;

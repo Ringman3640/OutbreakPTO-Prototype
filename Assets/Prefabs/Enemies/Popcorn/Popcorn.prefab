@@ -280,6 +280,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageTarget: {fileID: 2785790115785393322}
+  ignoreNeutral: 0
+  ignoreFriendly: 0
+  ignoreHostile: 1
 --- !u!1 &3980753569672497508
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,5 +362,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startEnabled: 1
   damage: 10
+  damageSource: 4
   damageType: 4
   damageReponse: 1

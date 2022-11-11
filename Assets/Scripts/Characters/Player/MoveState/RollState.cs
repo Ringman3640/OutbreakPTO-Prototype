@@ -5,6 +5,7 @@ using UnityEngine;
 public class RollState : MoveState
 {
     private bool started;
+    private bool madeInvincible;
     private float speed;
     private const float DEFAULT_SPEED = 6f;
     private Vector3 moveDirection;
@@ -15,6 +16,7 @@ public class RollState : MoveState
         AnimationBlockLevel = AnimationRestriction.All;
 
         started = false;
+        madeInvincible = false;
         speed = rollSpeed;
     }
 
@@ -23,7 +25,7 @@ public class RollState : MoveState
         if (player == null)
         {
             Debug.LogError("RollState: Player reference was null");
-            completed = true;
+            Completed = true;
             return;
         }
 
@@ -34,6 +36,25 @@ public class RollState : MoveState
         }
 
         player.Rigidbody.velocity = moveDirection * speed;
+    }
+
+    public override void Finish()
+    {
+        sm.OverrideSequences();
+        player.Invincible = false;
+    }
+
+    // Notify is used to indicate if the Player should be made invincible or vincible
+    public override void Nofity()
+    {
+        if (!madeInvincible)
+        {
+            player.Invincible = true;
+            madeInvincible = true;
+            return;
+        }
+
+        player.Invincible = false;
     }
 
     private void PlayRollAnimation()

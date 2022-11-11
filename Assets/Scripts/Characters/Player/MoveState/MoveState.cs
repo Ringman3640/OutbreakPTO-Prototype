@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 // Requirements for all derived MoveState classes:
 //     - Define ControlBlockLevel and AnimationBlockLevel
-//     - Implement Execute()
+//     - Implement Execute() and Finish()
 
 [System.Flags]
 public enum ControlRestriction
@@ -30,7 +30,7 @@ public enum AnimationRestriction
 public abstract class MoveState
 {
     // Indicate if the MoveState has completed execution
-    public bool completed
+    public bool Completed
     {
         get; protected set;
     }
@@ -71,15 +71,13 @@ public abstract class MoveState
     // Should be called in Player's Update() function
     public abstract void Execute();
 
+    // Executed when the MoveState is completed by the MoveStateManager
+    // Must revert any state changes to cover priority overrides
+    public abstract void Finish();
+
     // Notify the MoveState if some condition is met
     // Use as an animation event to signify a specific frame
     public virtual void Nofity()
-    {
-        return;
-    }
-
-    // Executed when the MoveState is completed by the MoveStateManager
-    public virtual void Completed()
     {
         return;
     }
