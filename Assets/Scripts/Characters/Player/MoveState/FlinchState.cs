@@ -6,10 +6,11 @@ public class FlinchState : MoveState
 {
     private bool started;
 
-    public FlinchState()
+    public FlinchState() : base()
     {
         ControlBlockLevel = ControlRestriction.None;
         AnimationBlockLevel = AnimationRestriction.Top;
+        PriorityLevel = 1;
 
         started = false;
     }

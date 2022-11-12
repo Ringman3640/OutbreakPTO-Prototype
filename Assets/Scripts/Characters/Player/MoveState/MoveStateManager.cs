@@ -8,13 +8,6 @@ public class MoveStateManager : MonoBehaviour
     // Current MoveState being executed
     private MoveState currentState;
 
-    // Buffered MoveState to potentially execute
-    private MoveState bufferState;
-    private float bufferAddTime;
-
-    // Time buffer for the buffered MoveState to be accepted
-    public float bufferAcceptanceTime = 0.25f;
-
     // Block level properties
     public ControlRestriction ControlBlockLevel
     {
@@ -49,8 +42,6 @@ public class MoveStateManager : MonoBehaviour
         Assert.IsNotNull(player);
 
         currentState = null;
-        bufferState = null;
-        bufferAddTime = 0f;
     }
 
     // Execute the current MoveState
@@ -74,7 +65,7 @@ public class MoveStateManager : MonoBehaviour
     }
 
     // Add a MoveState as the current state
-    // If there is already a state, the MoveState is buffered
+    // If there is already a state, override if a higher priority
     public void AddMoveState(MoveState state)
     {
         if (currentState == null)
@@ -84,9 +75,21 @@ public class MoveStateManager : MonoBehaviour
             return;
         }
 
-        bufferState = state;
-        bufferState.Initialize(gameObject);
-        bufferAddTime = Time.time;
+        if (state.PriorityLevel > currentState.PriorityLevel)
+        {
+            currentState.Finish();
+            currentState = state;
+            currentState.Initialize(gameObject);
+            return;
+        }
+
+        if (state.PriorityLevel == currentState.PriorityLevel && currentState.EqualOverwritten)
+        {
+            currentState.Finish();
+            currentState = state;
+            currentState.Initialize(gameObject);
+            return;
+        }
     }
 
     // Get the current MoveState
@@ -116,25 +119,7 @@ public class MoveStateManager : MonoBehaviour
         }
 
         currentState.Finish();
-
-        if (bufferState  == null)
-        {
-            currentState = null;
-        }
-        else if (Time.time - bufferAddTime <= bufferAcceptanceTime)
-        {
-            currentState = bufferState;
-            bufferState = null;
-            bufferAddTime = 0f;
-        }
-        else
-        {
-            currentState = null;
-            bufferState = null;
-            bufferAddTime = 0f;
-        }
-
-        // TODO: Restore old state
+        currentState = null;
     }
 
     // Check if there is no MoveState currently being executed

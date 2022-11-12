@@ -95,7 +95,7 @@ public class PlayerManager : Damageable
         lookDirection = Vector3.zero;
         pointPosition = Vector3.zero;
 
-        PlayerSystem.Instance.SetPlayer(gameObject);
+        PlayerSystem.Inst.SetPlayer(gameObject);
     }
 
     // Update is called once per frame
@@ -122,6 +122,7 @@ public class PlayerManager : Damageable
     public override void RecieveDamage(HitboxData damageInfo, GameObject collider = null)
     {
         currHealth -= damageInfo.Damage;
+        UISystem.Inst.UpdateHealthBar();
         sm.Effects.PlayFlash();
 
         switch (damageInfo.Response)

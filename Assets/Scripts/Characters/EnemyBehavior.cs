@@ -35,7 +35,7 @@ public class EnemyBehavior : Damageable
     {
         base.Start();
 
-        player = PlayerSystem.Instance.GetPlayer();
+        player = PlayerSystem.Inst.GetPlayer();
 
         distance = Vector2.Distance(transform.position, player.transform.position);
         //attackSpeed = 1.5f;
@@ -45,7 +45,7 @@ public class EnemyBehavior : Damageable
     // Update is called once per frame
     void Update()
     {
-        player = PlayerSystem.Instance.GetPlayer();
+        player = PlayerSystem.Inst.GetPlayer();
         if (player == null)
         {
             return;

@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 // Requirements for all derived MoveState classes:
-//     - Define ControlBlockLevel and AnimationBlockLevel
+//     - Define ControlBlockLevel, AnimationBlockLevel, and PriorityLevel
 //     - Implement Execute() and Finish()
+//     - Finish() must revert any state changes in case of a priority overwrite
 
 [System.Flags]
 public enum ControlRestriction
@@ -47,6 +48,20 @@ public abstract class MoveState
         get; protected set;
     }
 
+    // Priority level for overwritting
+    // Higher priority states overwrite lower priority states
+    // Must be 0 or greater
+    public int PriorityLevel
+    {
+        get; protected set;
+    }
+
+    // Indicate if the state should be overwritten by equal priority states
+    public bool EqualOverwritten
+    {
+        get; protected set;
+    }
+
     // Reference components
     protected PlayerManager player;
     protected SpriteManager sm;
@@ -55,6 +70,9 @@ public abstract class MoveState
     public MoveState()
     {
         player = null;
+        sm = null;
+        PriorityLevel = -1;
+        EqualOverwritten = false;
     }
 
     // Initialize the MoveState given a reference to the caller Player
@@ -65,6 +83,11 @@ public abstract class MoveState
 
         sm = caller.transform.Find("Move Offsetted/Sprite").GetComponent<SpriteManager>();
         Assert.IsNotNull(sm);
+
+        if (PriorityLevel < 0)
+        {
+            Debug.LogError("MoveStaet Error: Priority level not set.");
+        }
     }
 
     // Execute the given state on an Update() basis

@@ -6,18 +6,35 @@ using UnityEngine.Assertions;
 public abstract class Damageable : MonoBehaviour
 {
     [SerializeField]
-    protected int maxHealth = 100;
+    protected int startingHealth = 100;
 
+    protected int maxHealth;
     protected int currHealth;
 
+    // Indicates if the Damageable object does not take damage
     public bool Invincible
     {
         get; set;
     }
 
+    // Properties
+    public int StartingHealth
+    {
+        get { return startingHealth; }
+    }
+    public int MaxHealth
+    {
+        get { return maxHealth; }
+    }
+    public int Health
+    {
+        get { return currHealth; }
+    }
+
     protected virtual void Start()
     {
-        currHealth = maxHealth;
+        maxHealth = startingHealth;
+        currHealth = startingHealth;
         Invincible = false;
     }
 

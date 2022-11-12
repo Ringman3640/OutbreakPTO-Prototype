@@ -10,10 +10,11 @@ public class RollState : MoveState
     private const float DEFAULT_SPEED = 6f;
     private Vector3 moveDirection;
     
-    public RollState(float rollSpeed = DEFAULT_SPEED)
+    public RollState(float rollSpeed = DEFAULT_SPEED) : base()
     {
         ControlBlockLevel = ControlRestriction.All;
         AnimationBlockLevel = AnimationRestriction.All;
+        PriorityLevel = 5;
 
         started = false;
         madeInvincible = false;

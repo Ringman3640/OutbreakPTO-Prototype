@@ -11,7 +11,7 @@ public class PlayerSystem : MonoBehaviour
     GameObject player;
 
     // Instance property
-    public static PlayerSystem Instance
+    public static PlayerSystem Inst
     {
         get { return instance; }
     }
@@ -43,5 +43,15 @@ public class PlayerSystem : MonoBehaviour
     public GameObject GetPlayer()
     {
         return player;
+    }
+
+    public PlayerManager GetPlayerManager()
+    {
+        if (player == null)
+        {
+            return null;
+        }
+
+        return player.GetComponent<PlayerManager>();
     }
 }
