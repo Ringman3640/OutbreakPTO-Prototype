@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 using UnityEngine.Assertions;
 
 public class PlayerManager : Damageable
 {
     // Component references
+    public PlayerInput input;
     public Rigidbody2D rb;
     public SpriteManager sm;
     public MoveStateManager msm;
@@ -15,8 +18,8 @@ public class PlayerManager : Damageable
     // Speed of character
     public float movementSpeed = 4f;
 
-    // Starting health
-    public float startHealth = 50f;
+    // Indicates if the player is using a gamepad (otherwise keyboard)
+    private bool usingGamepad = false;
 
     // Directional vectors for movement and character looking
     // Position for current mouse position
@@ -96,6 +99,8 @@ public class PlayerManager : Damageable
         pointPosition = Vector3.zero;
 
         PlayerSystem.Inst.SetPlayer(gameObject);
+
+        InputUser.onChange += ControlsChanged;
     }
 
     // Update is called once per frame
@@ -150,8 +155,7 @@ public class PlayerManager : Damageable
             return;
         }
 
-        moveDirection.x = Input.GetAxisRaw("Horizontal");
-        moveDirection.y = Input.GetAxisRaw("Vertical");
+        moveDirection = input.actions["Move"].ReadValue<Vector2>();
         moveDirection.z = 0f;
         moveDirection.Normalize();
     }
@@ -164,6 +168,21 @@ public class PlayerManager : Damageable
             return;
         }
 
+        if (usingGamepad)
+        {
+            pointPosition = transform.position;
+            Vector2 lookValue = input.actions["Look"].ReadValue<Vector2>();
+            if (lookValue == Vector2.zero)
+            {
+                return;
+            }
+
+            lookDirection = lookValue;
+            lookDirection.z = 0f;
+            lookDirection.Normalize();
+            return;
+        }
+
         pointPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         lookDirection = pointPosition - transform.position;
         lookDirection.z = 0f;
@@ -173,22 +192,21 @@ public class PlayerManager : Damageable
     // Check for User inputs to perform player actions
     private void CheckActionInput()
     {
-        if (Input.GetButtonDown("Roll"))
+        if (input.actions["Roll"].triggered)
         {
             msm.AddMoveState(new RollState());
         }
 
-        if (Input.GetButtonDown("Interact"))
+        if (input.actions["Interact"].triggered)
         {
             pim.Interact();
         }
 
-        float scroll = Input.GetAxisRaw("Mouse ScrollWheel");
-        if (scroll > 0f)
+        if (input.actions["Next Weapon"].triggered)
         {
             wim.RotateNextWeapon();
         }
-        else if (scroll < 0f)
+        else if (input.actions["Prev Weapon"].triggered)
         {
             wim.RotatePrevWeapon();
         }
@@ -252,5 +270,22 @@ public class PlayerManager : Damageable
         }
 
         sm.UpdateState();
+    }
+
+    private void ControlsChanged(InputUser user, InputUserChange change, InputDevice device)
+    {
+        if (change != InputUserChange.ControlSchemeChanged)
+        {
+            return;
+        }
+
+        if (user.controlScheme.Value.name == "Gamepad")
+        {
+            usingGamepad = true;
+        }
+        else
+        {
+            usingGamepad = false;
+        }
     }
 }
