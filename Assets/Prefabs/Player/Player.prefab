@@ -123,7 +123,7 @@ MonoBehaviour:
   - {x: 0.1559433, y: -0.12507851, z: 0}
   m_ShapePathHash: 1376537051
   m_Mesh: {fileID: 0}
-  m_InstanceId: 43308
+  m_InstanceId: 47406
 --- !u!1 &47306666442117368
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b813022a805694ab03f349aa77f8d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 47306667882915545}
   weaponSlots: 3
 --- !u!1 &47306667415951031
 GameObject:
@@ -750,7 +749,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &47306667882915545
 MonoBehaviour:
@@ -772,7 +771,6 @@ MonoBehaviour:
   wim: {fileID: 47306667263836355}
   pim: {fileID: 47306667882915524}
   movementSpeed: 4
-  startHealth: 50
 --- !u!114 &47306667882915527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,6 +882,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9570accb-b61f-4a0d-8f6f-d21b134deda9
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cb8fb013-df71-445c-aba6-ea83692dc562
+    m_ActionName: Player/Next Weapon[/Mouse/scroll/up]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c4d5af53-1749-4b69-b205-a83fea36ca55
+    m_ActionName: Player/Prev Weapon[/Mouse/scroll/down]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

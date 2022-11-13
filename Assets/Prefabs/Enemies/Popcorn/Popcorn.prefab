@@ -171,17 +171,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ca4ab708322bd44bc40743d2e477ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  animator: {fileID: 2785790115785393325}
+  startingHealth: 30
   rb: {fileID: 2785790115785393323}
-  splatterEffect: {fileID: 1510457631459970013, guid: dda0a78ec5dcc904c8bf907ab06715b1, type: 3}
   speed: 3
+  animator: {fileID: 2785790115785393325}
+  splatterEffect: {fileID: 1510457631459970013, guid: dda0a78ec5dcc904c8bf907ab06715b1, type: 3}
   attackSpeed: 3
   attackDuration: 1
-  health: 30
   attacking: 0
-  direction: 0
-  attackCoolDown: 1
+  direction: ' '
+  attackCoolDown: 0
 --- !u!95 &2785790115785393325
 Animator:
   serializedVersion: 4

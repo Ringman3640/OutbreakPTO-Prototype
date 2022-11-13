@@ -8,7 +8,7 @@ public class MoveStateManager : MonoBehaviour
     // Current MoveState being executed
     private MoveState currentState;
 
-    // Block level properties
+    // Control Block Level property
     public ControlRestriction ControlBlockLevel
     {
         get
@@ -20,27 +20,10 @@ public class MoveStateManager : MonoBehaviour
             return currentState.ControlBlockLevel;
         }
     }
-    public AnimationRestriction AnimationBlockLevel
-    {
-        get
-        {
-            if (currentState == null)
-            {
-                return AnimationRestriction.None;
-            }
-            return currentState.AnimationBlockLevel;
-        }
-    }
-
-    // Component references
-    private PlayerManager player;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GetComponent<PlayerManager>();
-        Assert.IsNotNull(player);
-
         currentState = null;
     }
 
@@ -53,14 +36,11 @@ public class MoveStateManager : MonoBehaviour
             return;
         }
 
+        currentState.Execute();
+
         if (currentState.Completed)
         {
             FinishCurrentState();
-        }
-
-        if (currentState != null)
-        {
-            currentState.Execute();
         }
     }
 
@@ -71,7 +51,6 @@ public class MoveStateManager : MonoBehaviour
         if (currentState == null)
         {
             currentState = state;
-            currentState.Initialize(gameObject);
             return;
         }
 
@@ -79,7 +58,6 @@ public class MoveStateManager : MonoBehaviour
         {
             currentState.Finish();
             currentState = state;
-            currentState.Initialize(gameObject);
             return;
         }
 
@@ -87,7 +65,6 @@ public class MoveStateManager : MonoBehaviour
         {
             currentState.Finish();
             currentState = state;
-            currentState.Initialize(gameObject);
             return;
         }
     }
@@ -99,14 +76,14 @@ public class MoveStateManager : MonoBehaviour
     }
 
     // Notify the current state about some event
-    public void NofityCurrentState()
+    public void NotifyCurrentState()
     {
         if (currentState == null)
         {
             return;
         }
 
-        currentState.Nofity();
+        currentState.Notify();
     }
 
     // Finish the current MoveState and remove it

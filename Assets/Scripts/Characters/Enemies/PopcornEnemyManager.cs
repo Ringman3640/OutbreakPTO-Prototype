@@ -2,19 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehavior : Damageable
+public class PopcornEnemyManager : Enemy
 {
     public Animator animator;
-    public Rigidbody2D rb;
     public GameObject splatterEffect;
 
     private GameObject player;
 
-    public float speed;
     public float attackSpeed;
     public float attackDuration;
 
-    public int health;
     public bool attacking = false;
     public string direction = " "; 
 
@@ -35,11 +32,7 @@ public class EnemyBehavior : Damageable
     {
         base.Start();
 
-        player = PlayerSystem.Inst.GetPlayer();
-
-        distance = Vector2.Distance(transform.position, player.transform.position);
-        //attackSpeed = 1.5f;
-        attackDirection = player.transform.position - transform.position;
+        player = null;
     }
 
     // Update is called once per frame
@@ -51,7 +44,7 @@ public class EnemyBehavior : Damageable
             return;
         }
 
-        distance = Vector2.Distance(transform.position, player.transform.position);
+        distance = DistanceFromPlayer();
         updateDirection();
 
         //update sprite 
@@ -68,9 +61,12 @@ public class EnemyBehavior : Damageable
         if(attacking == false){
         //update movement
             if(distance > attackDistance){
-                transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
+                //transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
+                MoveTowardsPlayer();
 
             }else{
+                StopMovement();
+
                 //if cooldown time if over then attack
                 if(Time.time > nextAction){
                     attackDirection = player.transform.position - transform.position;
@@ -83,7 +79,7 @@ public class EnemyBehavior : Damageable
             }
         }else{
             //stop attacking if attack duration is over
-            if(Time.time > nextAction){
+            if (Time.time > nextAction){
                 attacking = false;
                 directionLock = false;
                 animator.SetBool("attacking", false);
@@ -96,7 +92,7 @@ public class EnemyBehavior : Damageable
 
     // Update the direction string to indicate whatch direction we are primarily moving
     void updateDirection(){
-        Vector2 currDirection = player.transform.position - transform.position;
+        Vector2 currDirection = DirectionTowardsPlayer();
         float x = currDirection.x;
         float y = currDirection.y;
 
@@ -128,7 +124,7 @@ public class EnemyBehavior : Damageable
     }
     public override void RecieveDamage(HitboxData damageInfo, GameObject collider = null)
     {
-        health -= damageInfo.Damage;
+        currHealth -= damageInfo.Damage;
 
         if (collider != null && splatterEffect != null)
         {
@@ -137,7 +133,7 @@ public class EnemyBehavior : Damageable
             effect.transform.right = collider.transform.right;
         }
 
-        if (health <= 0)
+        if (currHealth <= 0)
         {
             Kill();
         }

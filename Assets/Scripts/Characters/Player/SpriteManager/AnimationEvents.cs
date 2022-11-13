@@ -22,9 +22,9 @@ public class AnimationEvents : MonoBehaviour
         Assert.IsNotNull(msManager);
     }
 
-    public void NofityState()
+    public void NotifyState()
     {
-        msManager.NofityCurrentState();
+        msManager.NotifyCurrentState();
     }
 
     public void FinishState()

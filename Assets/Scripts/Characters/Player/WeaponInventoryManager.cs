@@ -5,36 +5,75 @@ using UnityEngine.Assertions;
 
 public class WeaponInventoryManager : MonoBehaviour
 {
-    public PlayerManager player;
-
     public int weaponSlots = 3;
 
     private LinkedList<GameObject> weaponList;
     private LinkedListNode<GameObject> current;
 
+    private bool weaponsEnabled;
+
+    public bool WeaponsEnabled
+    {
+        get { return weaponsEnabled; }
+        set
+        {
+            if (value == true)
+            {
+                EnableWeapons();
+            }
+            else
+            {
+                DisableWeapons();
+            }
+        }
+    }
+
     // Start is called before the first frame update
     void Awake()
     {
-        Assert.IsNotNull(player);
-
         weaponList = new();
         current = null;
+        weaponsEnabled = true;
     }
 
-    // Update the weapon state for the current weapon in the inventory
-    public void UpdateCurrentWeaponState()
+    public void AimCurrentWeapon(Vector2 aimDirection)
     {
         if (current == null || current.Value == null)
         {
             return;
         }
 
-        current.Value.GetComponent<WeaponManager>().UpdateWeaponState(player.LookDirection);
+        current.Value.GetComponent<WeaponManager>().Aim(aimDirection);
+    }
+
+    public void AimCurrentWeapon(Vector2 aimDirection, Vector2 aimSpot)
+    {
+        if (current == null || current.Value == null)
+        {
+            return;
+        }
+
+        current.Value.GetComponent<WeaponManager>().Aim(aimDirection, aimSpot);
+    }
+
+    public void FireCurrentWeapon(bool triggerStarted)
+    {
+        if (current == null || current.Value == null)
+        {
+            return;
+        }
+
+        current.Value.GetComponent<WeaponManager>().Fire(triggerStarted);
     }
 
     // Rotate the current weapon to the next weapon
     public void RotateNextWeapon()
     {
+        if (!weaponsEnabled)
+        {
+            return;
+        }
+
         if (current == null)
         {
             current = weaponList.First;
@@ -54,6 +93,11 @@ public class WeaponInventoryManager : MonoBehaviour
     // Rotate the current weapon to the previous weapon
     public void RotatePrevWeapon()
     {
+        if (!weaponsEnabled)
+        {
+            return;
+        }
+
         if (current == null)
         {
             current = weaponList.First;
@@ -93,7 +137,15 @@ public class WeaponInventoryManager : MonoBehaviour
             current.Value = weapon;
             current.Value.GetComponent<WeaponManager>().Equip(gameObject);
         }
-        EnableCurrent();
+
+        if (weaponsEnabled)
+        {
+            EnableCurrent();
+        }
+        else
+        {
+            DisableCurrent();
+        }
 
         return true;
     }
@@ -112,7 +164,15 @@ public class WeaponInventoryManager : MonoBehaviour
             current = null;
             weaponList.Remove(weapon);
             current = weaponList.First;
-            EnableCurrent();
+
+            if (weaponsEnabled)
+            {
+                EnableCurrent();
+            }
+            else
+            {
+                DisableCurrent();
+            }
             return;
         }
 
@@ -135,7 +195,27 @@ public class WeaponInventoryManager : MonoBehaviour
         current.Value.GetComponent<WeaponManager>().Unequip();
         weaponList.Remove(current);
         current = weaponList.First;
+
+        if (weaponsEnabled)
+        {
+            EnableCurrent();
+        }
+        else
+        {
+            DisableCurrent();
+        }
+    }
+
+    public void EnableWeapons()
+    {
+        weaponsEnabled = true;
         EnableCurrent();
+    }
+
+    public void DisableWeapons()
+    {
+        weaponsEnabled = false;
+        DisableCurrent();
     }
 
     private void EnableCurrent()

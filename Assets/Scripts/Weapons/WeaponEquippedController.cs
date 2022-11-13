@@ -27,7 +27,7 @@ public class WeaponEquippedController : MonoBehaviour
     private bool weaponEnabled;
     private WeaponOrientation orientation;
 
-    private PlayerManager player;
+    private GameObject holder;
 
     public bool WeaponEnabled
     {
@@ -63,53 +63,46 @@ public class WeaponEquippedController : MonoBehaviour
         lastFireTime = 0;
         currAmmo = wm.ammoCapacity;
 
-        player = null;
+        holder = null;
 
         Disable();
     }
 
-    public void Initialize(PlayerManager inPlayer)
+    public void Initialize(GameObject weaponHolder)
     {
-        player = inPlayer;
+        holder = weaponHolder;
         Enable();
-        UpdateWeaponState(player.LookDirection);
     }
 
     public void Remove()
     {
-        player = null;
+        holder = null;
         Disable();
     }
 
-    public void UpdateWeaponState(Vector3 pointDirection)
+    public void Aim(Vector2 aimDirection)
     {
-        if (player.ControlBlockLevel.HasFlag(ControlRestriction.HoldWeapon))
+        if (!weaponEnabled)
         {
-            weaponEnabled = false;
-            wsm.Visible = false;
             return;
         }
-        else if (!weaponEnabled)
+
+        SetDirection(aimDirection);
+    }
+
+    public void Aim(Vector2 aimDirection, Vector2 aimPoint)
+    {
+        if (!weaponEnabled)
         {
-            weaponEnabled = true;
-            wsm.Visible = true;
+            return;
         }
+
+        Vector2 pointDirection = aimPoint - (Vector2)transform.position;
+        pointDirection.Normalize();
+
+        // TODO: Check if pointDirection is too extreme and use aimDirection instead
 
         SetDirection(pointDirection);
-
-        if (currAmmo <= 0)
-        {
-            return;
-        }
-
-        if (wm.automaticFire && Input.GetButton("Shoot"))
-        {
-            Fire();
-        }
-        else if (Input.GetButtonDown("Shoot"))
-        {
-            Fire();
-        }
     }
 
     public bool Fire()
@@ -117,6 +110,11 @@ public class WeaponEquippedController : MonoBehaviour
         if (wm.projectile == null)
         {
             Debug.LogError("WeaponController: Projectile not initialized");
+            return false;
+        }
+
+        if (!weaponEnabled)
+        {
             return false;
         }
 
@@ -165,7 +163,7 @@ public class WeaponEquippedController : MonoBehaviour
             // Set far light component of muzzle flash to player ground level
             // (Makes shadows look properly aligned)
             flash.GetComponent<MuzzleFlashController>().farLight.transform.position 
-                    = player.transform.position + transform.right;
+                    = holder.transform.position + transform.right;
 
             // Set parent if given
             if (wm.worldProjectileStorage != null)
@@ -180,7 +178,7 @@ public class WeaponEquippedController : MonoBehaviour
         return true;
     }
 
-    public void SetDirection(Vector3 direction)
+    private void SetDirection(Vector3 direction)
     {
         transform.right = direction;
 

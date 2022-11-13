@@ -4,57 +4,44 @@ using UnityEngine;
 
 public class RollState : MoveState
 {
-    private bool started;
-    private bool madeInvincible;
+    private PlayerManager player;
     private float speed;
     private const float DEFAULT_SPEED = 6f;
     private Vector3 moveDirection;
     
-    public RollState(float rollSpeed = DEFAULT_SPEED) : base()
+    public RollState(GameObject caller, float rollSpeed = DEFAULT_SPEED) : base(caller)
     {
         ControlBlockLevel = ControlRestriction.All;
-        AnimationBlockLevel = AnimationRestriction.All;
         PriorityLevel = 5;
 
-        started = false;
-        madeInvincible = false;
         speed = rollSpeed;
     }
 
-    public override void Execute()
+    protected override void Initialize(GameObject caller)
     {
-        if (player == null)
-        {
-            Debug.LogError("RollState: Player reference was null");
-            Completed = true;
-            return;
-        }
+        player = caller.GetComponent<PlayerManager>();
+        player.WeaponInventory.DisableWeapons();
+        PlayRollAnimation();
 
-        if (!started)
-        {
-            PlayRollAnimation();
-            started = true;
-        }
+        player.Invincible = true;
+    }
 
+    protected override void Execution()
+    {
         player.Rigidbody.velocity = moveDirection * speed;
     }
 
-    public override void Finish()
+    // Notification() is used to known when to stop providing i-frames
+    protected override void Notification()
     {
-        sm.OverrideSequences();
         player.Invincible = false;
     }
 
-    // Notify is used to indicate if the Player should be made invincible or vincible
-    public override void Nofity()
+    protected override void Restore()
     {
-        if (!madeInvincible)
-        {
-            player.Invincible = true;
-            madeInvincible = true;
-            return;
-        }
-
+        player.Sprite.Unlock();
+        player.Sprite.OverrideSequences();
+        player.WeaponInventory.EnableWeapons();
         player.Invincible = false;
     }
 
@@ -66,9 +53,10 @@ public class RollState : MoveState
             moveDirection = player.LookDirection;
         }
 
-        sm.CalculateDirection(moveDirection);
-        sm.Action = AnimAction.Roll;
-        sm.BodyPart = AnimBodyPart.Full;
-        sm.PlaySequenceAnimation();
+        player.Sprite.CalculateDirection(moveDirection);
+        player.Sprite.Action = AnimAction.Roll;
+        player.Sprite.BodyPart = AnimBodyPart.Full;
+        player.Sprite.PlaySequenceAnimation();
+        player.Sprite.Lock();
     }
 }

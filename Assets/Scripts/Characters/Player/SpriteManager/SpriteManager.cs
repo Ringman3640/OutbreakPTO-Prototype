@@ -37,7 +37,7 @@ public class SpriteManager : MonoBehaviour
         get { return action; }
         set
         {
-            if (value != action)
+            if (value != action && !locked)
             {
                 action = value;
                 needsUpdate = true;
@@ -49,7 +49,14 @@ public class SpriteManager : MonoBehaviour
     public AnimDirection Direction
     {
         get { return direction; } 
-        set { direction = value; }
+        set 
+        {
+            if (!locked)
+            {
+                direction = value;
+
+            }
+        }
     }
 
     // Defines the bodypart to play the animation
@@ -58,7 +65,7 @@ public class SpriteManager : MonoBehaviour
         get { return bodyPart; }
         set
         {
-            if (value != bodyPart)
+            if (value != bodyPart && !locked)
             {
                 bodyPart = value;
                 needsUpdate = true;
@@ -70,7 +77,13 @@ public class SpriteManager : MonoBehaviour
     public bool FlipX
     {
         get { return flipX; }
-        set { flipX = value; }
+        set
+        {
+            if (!locked)
+            {
+                flipX = value;
+            }
+        }
     }
 
     // X direction range for front and back direction detection
@@ -84,6 +97,8 @@ public class SpriteManager : MonoBehaviour
 
     // Indicates if the sprite needs to be updated from a changed property
     private bool needsUpdate;
+
+    private bool locked;
 
     // Component references
     private SpriteEffects sEffects;
@@ -116,7 +131,9 @@ public class SpriteManager : MonoBehaviour
         direction = AnimDirection.Null;
         bodyPart = AnimBodyPart.Null;
         flipX = false;
+
         needsUpdate = true;
+        locked = false;
     }
 
     // General function for updating the current animation or setting a new animation
@@ -141,6 +158,11 @@ public class SpriteManager : MonoBehaviour
     // The animation can be interrupted by any other animation type
     public void PlayLoopAnimation()
     {
+        if (locked)
+        {
+            return;
+        }
+
         switch(BodyPart)
         {
             case AnimBodyPart.Full:
@@ -174,6 +196,11 @@ public class SpriteManager : MonoBehaviour
     // Sequence animations cannot be interrupted unless OverrideSequences() is called or the animation completes
     public void PlaySequenceAnimation()
     {
+        if (locked)
+        {
+            return;
+        }
+
         switch (BodyPart)
         {
             case AnimBodyPart.Full:
@@ -214,6 +241,18 @@ public class SpriteManager : MonoBehaviour
         fullSM.Unlock();
         topSM.Unlock();
         bottomSM.Unlock();
+    }
+
+    // Prevents any modifications of the SpriteManager until Unlock() is called
+    public void Lock()
+    {
+        locked = true;
+    }
+
+    // Reallows modification of the SpriteManager after Lock() is called
+    public void Unlock()
+    {
+        locked = false;
     }
 
     // Update only the direction component of playing animations

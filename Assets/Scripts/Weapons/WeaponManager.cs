@@ -28,7 +28,6 @@ public class WeaponManager : MonoBehaviour
 
     private bool equipped;
     private Sprite unequippedSprite;
-    private PlayerManager player;
 
     public bool Equipped
     {
@@ -45,8 +44,6 @@ public class WeaponManager : MonoBehaviour
         Assert.IsNotNull(equippedState);
         Assert.IsNotNull(unequippedState);
 
-        player = null;
-
         wec = transform.Find("Equipped State").GetComponent<WeaponEquippedController>();
         Assert.IsNotNull(wec);
 
@@ -54,14 +51,39 @@ public class WeaponManager : MonoBehaviour
         unequippedSprite = sr.sprite;
     }
 
-    public void UpdateWeaponState(Vector3 pointDirection)
+    public void Aim(Vector2 aimDirection)
     {
         if (!equipped)
         {
             return;
         }
 
-        wec.UpdateWeaponState(pointDirection);
+        wec.Aim(aimDirection);
+    }
+
+    public void Aim(Vector2 aimDirection, Vector2 aimPoint)
+    {
+        if (!equipped)
+        {
+            return;
+        }
+
+        wec.Aim(aimDirection, aimPoint);
+    }
+
+    public bool Fire(bool triggerStarted)
+    {
+        if (!equipped)
+        {
+            return false;
+        }
+
+        if (!triggerStarted && !automaticFire)
+        {
+            return false;
+        }
+
+        return wec.Fire();
     }
 
     public bool Equip(GameObject caller)
@@ -72,7 +94,6 @@ public class WeaponManager : MonoBehaviour
         }
 
         WeaponInventoryManager wim = caller.GetComponent<WeaponInventoryManager>();
-        player = wim.player;
         transform.parent = wim.transform;
         transform.localPosition = Vector3.zero;
 
@@ -80,7 +101,7 @@ public class WeaponManager : MonoBehaviour
         unequippedState.SetActive(false);
         sr.sprite = null;
 
-        wec.Initialize(player);
+        wec.Initialize(caller);
 
         equipped = true;
         return true;

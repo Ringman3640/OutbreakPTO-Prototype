@@ -76,13 +76,6 @@ public class PlayerManager : Damageable
             return msm.ControlBlockLevel;
         }
     }
-    public AnimationRestriction AnimationBlockLevel
-    {
-        get
-        {
-            return msm.AnimationBlockLevel;
-        }
-    }
 
     // Start is called before the first frame update
     protected override void Start()
@@ -112,16 +105,17 @@ public class PlayerManager : Damageable
         CheckActionInput();
         msm.Execute();
 
+        UpdateWeaponState();
         UpdateVelocity();
         UpdateSprite();
-
-        wim.UpdateCurrentWeaponState();
     }
 
     // Damagable method implementation
     public override void Kill()
     {
         // stub, add death animations
+        msm.FinishCurrentState();
+
         Destroy(gameObject);
     }
     public override void RecieveDamage(HitboxData damageInfo, GameObject collider = null)
@@ -133,7 +127,7 @@ public class PlayerManager : Damageable
         switch (damageInfo.Response)
         {
             case DamageResponse.Flinch:
-                msm.AddMoveState(new FlinchState());
+                msm.AddMoveState(new FlinchState(gameObject));
                 break;
 
             default:
@@ -194,7 +188,7 @@ public class PlayerManager : Damageable
     {
         if (input.actions["Roll"].triggered)
         {
-            msm.AddMoveState(new RollState());
+            msm.AddMoveState(new RollState(gameObject));
         }
 
         if (input.actions["Interact"].triggered)
@@ -220,6 +214,32 @@ public class PlayerManager : Damageable
         // stub
     }
 
+    private void UpdateWeaponState()
+    {
+        // Aim weapon
+        if (usingGamepad)
+        {
+            wim.AimCurrentWeapon(lookDirection);
+        }
+        else
+        {
+            wim.AimCurrentWeapon(lookDirection, pointPosition);
+        }
+
+        // Fire weapon
+        if (input.actions["Fire"].ReadValue<float>() != 0)
+        {
+            if (input.actions["Fire"].triggered)
+            {
+                wim.FireCurrentWeapon(true);
+            }
+            else
+            {
+                wim.FireCurrentWeapon(false);
+            }
+        }
+    }
+
     // Update the player's velocity given the value of moveDirection
     private void UpdateVelocity()
     {
@@ -240,11 +260,6 @@ public class PlayerManager : Damageable
     // Update the player's sprite animation for basic movement
     private void UpdateSprite()
     {
-        if (AnimationBlockLevel.HasFlag(AnimationRestriction.All))
-        {
-            return;
-        }
-
         if (moveDirection == Vector3.zero)
         {
             sm.Action = AnimAction.Idle;
@@ -255,20 +270,7 @@ public class PlayerManager : Damageable
         }
 
         sm.CalculateDirection(lookDirection);
-
-        if (!AnimationBlockLevel.HasFlag(AnimationRestriction.Top) && !AnimationBlockLevel.HasFlag(AnimationRestriction.Bottom))
-        {
-            sm.BodyPart = AnimBodyPart.TopBottom;
-        }
-        else if (!AnimationBlockLevel.HasFlag(AnimationRestriction.Top))
-        {
-            sm.BodyPart = AnimBodyPart.Top;
-        }
-        else if (!AnimationBlockLevel.HasFlag(AnimationRestriction.Bottom))
-        {
-            sm.BodyPart = AnimBodyPart.Bottom;
-        }
-
+        sm.BodyPart = AnimBodyPart.TopBottom;
         sm.UpdateState();
     }
 

@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 // Requirements for all derived MoveState classes:
-//     - Define ControlBlockLevel, AnimationBlockLevel, and PriorityLevel
-//     - Implement Execute() and Finish()
-//     - Finish() must revert any state changes in case of a priority overwrite
+//     - Define ControlBlockLevel and PriorityLevel
+//     - Implement Initialize(), Execution(), and Restore()
+//     - Restore() must revert any state changes in case of a priority overwrite
 
 [System.Flags]
 public enum ControlRestriction
@@ -19,31 +19,10 @@ public enum ControlRestriction
     HoldWeapon  = (1 << 3)
 }
 
-[System.Flags]
-public enum AnimationRestriction
-{
-    None    = 0,
-    All     = ~0,
-    Top     = (1 << 0),
-    Bottom  = (1 << 1),
-}
-
 public abstract class MoveState
 {
-    // Indicate if the MoveState has completed execution
-    public bool Completed
-    {
-        get; protected set;
-    }
-
     // Player control block level
     public ControlRestriction ControlBlockLevel
-    {
-        get; protected set;
-    }
-
-    // Sprite animation block level
-    public AnimationRestriction AnimationBlockLevel
     {
         get; protected set;
     }
@@ -62,46 +41,79 @@ public abstract class MoveState
         get; protected set;
     }
 
-    // Reference components
-    protected PlayerManager player;
-    protected SpriteManager sm;
-
-    // Default constructor
-    public MoveState()
+    // Indicate if the MoveState has completed execution
+    public bool Completed
     {
-        player = null;
-        sm = null;
-        PriorityLevel = -1;
-        EqualOverwritten = false;
+        get; protected set;
     }
 
-    // Initialize the MoveState given a reference to the caller Player
-    public virtual void Initialize(GameObject caller)
+    // Reference to the GameObject actor this MoveState belongs to
+    private GameObject actor;
+
+    // Indicates if the MoveState has been initialized
+    private bool initialized;
+
+    // Constructor
+    public MoveState(GameObject caller)
     {
-        player = caller.GetComponent<PlayerManager>();
-        Assert.IsNotNull(player);
+        PriorityLevel = 0;
+        EqualOverwritten = false;
+        Completed = false;
 
-        sm = caller.transform.Find("Move Offsetted/Sprite").GetComponent<SpriteManager>();
-        Assert.IsNotNull(sm);
-
-        if (PriorityLevel < 0)
-        {
-            Debug.LogError("MoveStaet Error: Priority level not set.");
-        }
+        actor = caller;
+        initialized = false;
     }
 
     // Execute the given state on an Update() basis
-    // Should be called in Player's Update() function
-    public abstract void Execute();
+    // Should be called in Actor's Update() function
+    public void Execute()
+    {
+        if (!initialized)
+        {
+            Initialize(actor);
+            initialized = true;
+        }
+
+        Execution();
+    }
+
+    // Restores the actor state from any modifications made by the MoveState
+    public void Finish()
+    {
+        if (!initialized)
+        {
+            return;
+        }
+
+        Restore();
+    }
+
+    // Notify the MoveState of a specific event
+    public void Notify()
+    {
+        if (!initialized)
+        {
+            return;
+        }
+
+        Notification();
+    }
+
+    // Initializer function that is called before the first Execution() call
+    protected abstract void Initialize(GameObject caller);
+
+    // Executed on an Update() basis to perform the MoveState implementation
+    protected abstract void Execution();
 
     // Executed when the MoveState is completed by the MoveStateManager
     // Must revert any state changes to cover priority overrides
-    public abstract void Finish();
+    protected abstract void Restore();
 
-    // Notify the MoveState if some condition is met
-    // Use as an animation event to signify a specific frame
-    public virtual void Nofity()
+    // Executed when the MoveState recieves a notification
+    protected virtual void Notification()
     {
         return;
     }
+
+
 }

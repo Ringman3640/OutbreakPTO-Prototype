@@ -82,7 +82,7 @@ public class SubspriteManager : MonoBehaviour
         }
         else
         {
-            anim.Play(animationName);
+            anim.Play(animationName, -1, 0f);
             prevAction = action;
             prevDirection = direction;
         }

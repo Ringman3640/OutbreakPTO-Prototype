@@ -4,31 +4,32 @@ using UnityEngine;
 
 public class FlinchState : MoveState
 {
-    private bool started;
+    private PlayerManager player;
 
-    public FlinchState() : base()
+    public FlinchState(GameObject caller) : base(caller)
     {
         ControlBlockLevel = ControlRestriction.None;
-        AnimationBlockLevel = AnimationRestriction.Top;
         PriorityLevel = 1;
-
-        started = false;
+        EqualOverwritten = true;
     }
 
-    public override void Execute()
+    protected override void Initialize(GameObject caller)
     {
-        if (started)
-        {
-            return;
-        }
+        player = caller.GetComponent<PlayerManager>();
 
-        sm.Action = AnimAction.Flinch;
-        sm.BodyPart = AnimBodyPart.Top;
-        sm.PlaySequenceAnimation();
+        // Play flinch animation
+        player.Sprite.Action = AnimAction.Flinch;
+        player.Sprite.BodyPart = AnimBodyPart.Top;
+        player.Sprite.PlaySequenceAnimation();
     }
 
-    public override void Finish()
+    protected override void Execution()
     {
-        sm.OverrideSequences();
+        return;
+    }
+
+    protected override void Restore()
+    {
+        player.Sprite.OverrideSequences();
     }
 }
