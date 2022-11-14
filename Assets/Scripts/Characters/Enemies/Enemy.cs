@@ -9,11 +9,49 @@ public abstract class Enemy : Damageable
     protected Rigidbody2D rb;
 
     [SerializeField]
+    private GameObject alertTrigger;
+
+    [SerializeField]
+    private GameObject playerAlertSignal;
+
+    [SerializeField]
+    private bool startAlerted = false;
+
+    [SerializeField]
+    private Vector2 startingDirection = Vector2.zero;
+
+    [SerializeField]
     protected float speed = 3f;
 
+    // Direction the enemy is currently facing
+    // Used for alert detection
+    protected Vector2 faceDirection;
+
+    // Indicates if the enemy has been alerted to the player
+    // An alerted enemy knows the player's location and will attack them
     protected bool alerted;
 
+    // Reference to the active player
+    // Only initialized when the enemy is alerted
+    private PlayerManager player;
+
+    // Mask for SightlineToPlayer() method
     private int raycastMask;
+
+    // Properties
+    public Vector2 FaceDirection
+    {
+        get { return faceDirection; }
+        set { faceDirection = value; }
+    }
+    public bool Alerted
+    {
+        get { return alerted; }
+    }
+    public PlayerManager Player
+    {
+        get { return player; }
+    }
 
     // Start is called before the first frame update
     protected override void Start()
@@ -22,14 +60,44 @@ public abstract class Enemy : Damageable
 
         rb = GetComponent<Rigidbody2D>();
         Assert.IsNotNull(rb);
+        Assert.IsNotNull(alertTrigger);
+        Assert.IsNotNull(playerAlertSignal);
 
-        alerted = false;
-        raycastMask = LayerMask.NameToLayer("Player") | LayerMask.NameToLayer("Obstacle");
+        raycastMask = (1 << LayerMask.NameToLayer("Player")) | (1 << LayerMask.NameToLayer("Obstacle"));
+
+        if (startingDirection == Vector2.zero)
+        {
+            faceDirection = new();
+            faceDirection.x = Random.Range(0f, 1f);
+            faceDirection.y = Random.Range(0f, 1f);
+
+            if (faceDirection == Vector2.zero)
+            {
+                faceDirection.x = 1f;
+            }
+        }
+        else
+        {
+            faceDirection = startingDirection;
+        }
+        faceDirection.Normalize();
+
+        if (!startAlerted || !Alert())
+        {
+            player = null;
+            alerted = false;
+        }
     }
 
+    // Damageable RecieveDamage method implementation
     public override void RecieveDamage(HitboxData damageInfo, GameObject collider = null)
     {
         currHealth -= damageInfo.Damage;
+
+        if (damageInfo.Source == DamageSource.Friendly)
+        {
+            Alert();
+        }
 
         // TODO: add damage response effects
         switch (damageInfo.Type)
@@ -62,21 +130,38 @@ public abstract class Enemy : Damageable
     }
 
     // Alert the enemy if the player is nearby
-    public virtual void Alert()
+    public virtual bool Alert(bool createAlertSignal = false)
     {
-        alerted = true;
-    }
-
-    // Move the enemy towards the player 
-    public void MoveTowardsPlayer()
-    {
-        GameObject player = PlayerSystem.Inst.GetPlayer();
+        player = PlayerSystem.Inst.GetPlayerManager();
         if (player == null)
         {
-            return;
+            return false;
         }
 
-        MoveTowardsPoint(player.transform.position);
+        if (createAlertSignal && playerAlertSignal != null)
+        {
+            GameObject signal = Instantiate(playerAlertSignal);
+            signal.transform.position = transform.position;
+            Destroy(signal, 2f);
+        }
+
+        alertTrigger.SetActive(false);
+        alerted = true;
+        return true;
+    }
+
+    // Remove the alerted signifier for the enemy
+    public virtual void Unalert()
+    {
+        alertTrigger.SetActive(true);
+        alerted = false;
+        player = null;
+    }
+
+    // Move the enemy towards its facing direction
+    public void MoveTowardsFaceDirection()
+    {
+        rb.velocity = faceDirection * speed;
     }
 
     // Move the enemy towards a coordinate point
@@ -94,10 +179,21 @@ public abstract class Enemy : Damageable
         rb.velocity = Vector2.zero;
     }
 
+    // Set the enemy's facing direction towards the player
+    public void FaceTowardsPlayer()
+    {
+        if (player == null)
+        {
+            return;
+        }
+
+        faceDirection = player.transform.position - transform.position;
+        faceDirection.Normalize();
+    }
+
     // Get a direction vector pointing towards the player
     public Vector2 DirectionTowardsPlayer()
     {
-        GameObject player = PlayerSystem.Inst.GetPlayer();
         if (player == null)
         {
             return Vector2.zero;
@@ -115,7 +211,6 @@ public abstract class Enemy : Damageable
     // Get the distance from the player in units
     public float DistanceFromPlayer()
     {
-        GameObject player = PlayerSystem.Inst.GetPlayer();
         if (player == null)
         {
             return -1f;
@@ -131,10 +226,9 @@ public abstract class Enemy : Damageable
     }
 
     // Check if there is a sightline to the player
-    // distance is the distance from 
     public bool SightlineToPlayer()
     {
-        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, 
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position,
                 DirectionTowardsPlayer(), Mathf.Infinity, raycastMask);
 
         if (hitInfo.collider == null || hitInfo.collider.tag != "Player")
@@ -143,5 +237,14 @@ public abstract class Enemy : Damageable
         }
 
         return true;
+    }
+
+    // Get the distance of the nearest collision towards the given direction
+    public float ClosestCollision(Vector2 direction)
+    {
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position,
+                direction, Mathf.Infinity, raycastMask);
+
+        return hitInfo.distance;
     }
 }

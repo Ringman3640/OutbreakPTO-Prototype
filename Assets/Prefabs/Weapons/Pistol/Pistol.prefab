@@ -532,6 +532,7 @@ MonoBehaviour:
   inaccuracyAngle: 7
   projectileSpeed: 60
   projectileMaxDist: 50
+  projectileSource: 1
   baseDamage: 5
   rateOfFire: 0.1
   automaticFire: 0
@@ -727,6 +728,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1575606731118296064}
+  - component: {fileID: 3022481458111342869}
   - component: {fileID: 1575606731118296070}
   - component: {fileID: 1575606731118296065}
   - component: {fileID: 1575606731118296068}
@@ -752,6 +754,21 @@ Transform:
   m_Father: {fileID: 1575606730758908823}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3022481458111342869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575606731118296067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9da7757b4d49f424dacc5302bf6f5c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagList:
+  - {fileID: 11400000, guid: c53cb035935330440b98446eda3e4fa7, type: 2}
+  - {fileID: 11400000, guid: 8d0854587f1821c41bf0cb235ff14e33, type: 2}
 --- !u!50 &1575606731118296070
 Rigidbody2D:
   serializedVersion: 4

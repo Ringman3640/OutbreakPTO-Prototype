@@ -7,8 +7,6 @@ public class PopcornEnemyManager : Enemy
     public Animator animator;
     public GameObject splatterEffect;
 
-    private GameObject player;
-
     public float attackSpeed;
     public float attackDuration;
 
@@ -31,15 +29,12 @@ public class PopcornEnemyManager : Enemy
     protected override void Start()
     {
         base.Start();
-
-        player = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        player = PlayerSystem.Inst.GetPlayer();
-        if (player == null)
+        if (Player == null)
         {
             return;
         }
@@ -62,14 +57,14 @@ public class PopcornEnemyManager : Enemy
         //update movement
             if(distance > attackDistance){
                 //transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
-                MoveTowardsPlayer();
+                MoveTowardsPoint(Player.transform.position);
 
             }else{
                 StopMovement();
 
                 //if cooldown time if over then attack
                 if(Time.time > nextAction){
-                    attackDirection = player.transform.position - transform.position;
+                    attackDirection = Player.transform.position - transform.position;
                     attacking = true;
                     nextAction = Time.time + attackDuration;
                     rb.velocity =  attackDirection * attackSpeed;

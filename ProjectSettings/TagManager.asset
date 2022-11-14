@@ -10,6 +10,7 @@ TagManager:
   - Weapon Inventory
   - Interactor
   - Enemy
+  - Signal
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Obstacle
   - Hitbox
   - Hurtbox
-  - Interaction
+  - Signal
   - Character
   - Player
   - 

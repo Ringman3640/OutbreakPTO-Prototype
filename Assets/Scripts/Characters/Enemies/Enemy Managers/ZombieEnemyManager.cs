@@ -15,8 +15,7 @@ public class ZombieEnemyManager : Enemy
     private List<GameObject> weaponList;
 
     public float fireRange = 8f;
-
-    private PlayerManager player;
+    public float meleeRange = 1f;
 
     // Properties
     public WeaponInventoryManager WeaponInventory
@@ -39,51 +38,43 @@ public class ZombieEnemyManager : Enemy
         Assert.IsNotNull(weaponList);
 
         GetStartingWeapon();
-
-        player = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        msm.Execute();
-
-        player = PlayerSystem.Inst.GetPlayerManager();
-        if (player == null || !alerted)
+        if (!alerted)
         {
             Idle();
             return;
         }
 
         float distance = DistanceFromPlayer();
-        Vector2 direction = DirectionTowardsPlayer();
-        esm.CalculateOrientation(direction);
+        FaceTowardsPlayer();
+        esm.CalculateOrientation(faceDirection);
 
-        if (distance > fireRange)
+        msm.Execute();
+
+        if (distance <= meleeRange)
         {
-            ApproachPlayer();
+            // stub, do melee attack
         }
-        else
+        else if (distance <= fireRange && SightlineToPlayer() && wim.WeaponCount > 0)
         {
             StopMovement();
             msm.AddMoveState(new ZombieFireState(gameObject));
         }
+        else
+        {
+            ApproachPlayer();
+        }
     }
 
-    // Damageable method implementations
+    // Damageable Kill() method implementation
     public override void Kill()
     {
         // stub, add death animation
         Destroy(gameObject);
-    }
-    public override void RecieveDamage(HitboxData damageInfo, GameObject collider = null)
-    {
-        base.RecieveDamage(damageInfo, collider);
-
-        if (damageInfo.Source == DamageSource.Friendly)
-        {
-            alerted = true;
-        }
     }
 
     private void GetStartingWeapon()
@@ -110,7 +101,8 @@ public class ZombieEnemyManager : Enemy
             return;
         }
 
-        MoveTowardsPlayer();
+        FaceTowardsPlayer();
+        MoveTowardsFaceDirection();
         esm.PlayAnimation("walk");
     }
 }

@@ -15,11 +15,17 @@ public class PlayerInteractTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        player.Interactions.AddInteractable(collision.gameObject);
+        if (collision.gameObject.HasTag("Interaction"))
+        {
+            player.Interactions.AddInteractable(collision.gameObject);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        player.Interactions.RemoveInteractable(collision.gameObject);
+        if (collision.gameObject.HasTag("Interaction"))
+        {
+            player.Interactions.RemoveInteractable(collision.gameObject);
+        }
     }
 }

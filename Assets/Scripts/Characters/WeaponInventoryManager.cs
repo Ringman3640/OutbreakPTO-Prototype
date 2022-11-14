@@ -41,6 +41,11 @@ public class WeaponInventoryManager : MonoBehaviour
         }
     }
 
+    public int WeaponCount
+    {
+        get { return weaponList.Count; }
+    }
+
     // Start is called before the first frame update
     void Awake()
     {

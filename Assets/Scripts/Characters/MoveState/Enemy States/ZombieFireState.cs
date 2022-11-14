@@ -6,6 +6,7 @@ public class ZombieFireState : MoveState
 {
     private enum FireSubstate
     {
+        Updating,
         Aiming,
         AimHolding,
         Shooting,
@@ -15,12 +16,21 @@ public class ZombieFireState : MoveState
 
     private ZombieEnemyManager zombie;
 
+    // General substate info
     private FireSubstate substate = FireSubstate.Aiming;
     private float substateStart;
 
-    private static float aimTime = 0.2f;
+    // Aiming substate
+    private static float aimTime = 0.4f;
+    Vector2 startingDirection;
+
+    // AimHolding substate
     private static float holdPause = 0.1f;
+
+    // Shooting substate
     private static float automaticFireTime = 0.6f;
+
+    // Recovery substate
     private static float recoveryTime = 0.4f;
 
     private bool automaticWeapon;
@@ -56,12 +66,35 @@ public class ZombieFireState : MoveState
 
         switch(substate)
         {
+            case FireSubstate.Updating:
+                if (!zombie.SightlineToPlayer())
+                {
+                    Completed = true;
+                }
+                else if (zombie.WeaponInventory.CurrentWeapon.Ammo <= 0)
+                {
+                    zombie.WeaponInventory.RemoveCurrentWeapon();
+                    Completed = true;
+                }
+                else
+                {
+                    startingDirection = zombie.FaceDirection;
+                    substate = FireSubstate.Aiming;
+                    substateStart = Time.time;
+                }
+                return;
+
             case FireSubstate.Aiming:
-                substateStart = Time.time;
-                zombie.WeaponInventory.AimCurrentWeapon(zombie.DirectionTowardsPlayer());
-                zombie.Sprite.CalculateOrientation(zombie.DirectionTowardsPlayer());
+                float aimCompletion = (Time.time - substateStart) / aimTime;
+                zombie.FaceDirection = Vector2.Lerp(startingDirection, zombie.DirectionTowardsPlayer(), aimCompletion);
+                zombie.WeaponInventory.AimCurrentWeapon(zombie.FaceDirection);
+                zombie.Sprite.CalculateOrientation(zombie.FaceDirection);
                 zombie.Sprite.PlayAnimation("idle");
-                substate = FireSubstate.AimHolding;
+                if (Time.time - substateStart >= aimTime)
+                {
+                    substate = FireSubstate.AimHolding;
+                    substateStart = Time.time;
+                }
                 return;
 
             case FireSubstate.AimHolding:
@@ -84,7 +117,7 @@ public class ZombieFireState : MoveState
             case FireSubstate.Recovering:
                 if (Time.time - substateStart >= recoveryTime)
                 {
-                    substate = FireSubstate.CheckAmmo;
+                    substate = FireSubstate.Updating;
                     substateStart = Time.time;
                 }
                 return;
@@ -94,7 +127,7 @@ public class ZombieFireState : MoveState
                 {
                     // stub, drop weapon
                 }
-                substate = FireSubstate.Aiming;
+                substate = FireSubstate.Updating;
                 substateStart = Time.time;
                 return;
         }
