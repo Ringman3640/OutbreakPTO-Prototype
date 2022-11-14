@@ -65,22 +65,23 @@ public abstract class Enemy : Damageable
 
         raycastMask = (1 << LayerMask.NameToLayer("Player")) | (1 << LayerMask.NameToLayer("Obstacle"));
 
+        startingDirection.Normalize();
         if (startingDirection == Vector2.zero)
         {
             faceDirection = new();
-            faceDirection.x = Random.Range(0f, 1f);
-            faceDirection.y = Random.Range(0f, 1f);
+            faceDirection.x = Random.Range(-1f, 1f);
+            faceDirection.y = Random.Range(-1f, 1f);
 
             if (faceDirection == Vector2.zero)
             {
                 faceDirection.x = 1f;
             }
+            faceDirection.Normalize();
         }
         else
         {
             faceDirection = startingDirection;
         }
-        faceDirection.Normalize();
 
         if (!startAlerted || !Alert())
         {
@@ -94,9 +95,9 @@ public abstract class Enemy : Damageable
     {
         currHealth -= damageInfo.Damage;
 
-        if (damageInfo.Source == DamageSource.Friendly)
+        if (!alerted&& damageInfo.Source == DamageSource.Friendly)
         {
-            Alert();
+            Alert(true);
         }
 
         // TODO: add damage response effects

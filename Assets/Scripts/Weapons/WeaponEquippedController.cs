@@ -72,18 +72,21 @@ public class WeaponEquippedController : MonoBehaviour
         Disable();
     }
 
+    // Initialize the equipped weapon with the weapon holder
     public void Initialize(GameObject weaponHolder)
     {
         holder = weaponHolder;
         Enable();
     }
 
+    // Remove the weapon from the holder
     public void Remove()
     {
         holder = null;
         Disable();
     }
 
+    // Aim the weapon towards the given direction
     public void Aim(Vector2 aimDirection)
     {
         if (!weaponEnabled)
@@ -94,6 +97,8 @@ public class WeaponEquippedController : MonoBehaviour
         SetDirection(aimDirection);
     }
 
+    // Aim the weapon towards the given point.
+    // If the resulting rotation is too extreme, defaults to the provided direction.
     public void Aim(Vector2 aimDirection, Vector2 aimPoint)
     {
         if (!weaponEnabled)
@@ -109,6 +114,7 @@ public class WeaponEquippedController : MonoBehaviour
         SetDirection(pointDirection);
     }
 
+    // Fire the weapon if there is remaining ammo and accounting for ROF
     public bool Fire()
     {
         if (wm.projectile == null)

@@ -38,6 +38,9 @@ public class ZombieEnemyManager : Enemy
         Assert.IsNotNull(weaponList);
 
         GetStartingWeapon();
+        esm.CalculateOrientation(FaceDirection);
+        esm.PlayAnimation("idle");
+        wim.AimCurrentWeapon(FaceDirection);
     }
 
     // Update is called once per frame

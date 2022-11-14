@@ -33,8 +33,6 @@ public class EnemySpriteManager : MonoBehaviour
         Assert.IsNotNull(actorName);
         Assert.IsNotNull(sr);
         Assert.IsNotNull(anim);
-
-        Orientation = EnemyOrientation.FrontRight;
     }
 
     public void PlayAnimation(string actionName)

@@ -210,14 +210,6 @@ public class PlayerManager : Damageable
         {
             wim.RotatePrevWeapon();
         }
-
-        // TEMP FOR TESTING ONLY
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-
-        // stub
     }
 
     private void UpdateWeaponState()
