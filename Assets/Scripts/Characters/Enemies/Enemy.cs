@@ -11,6 +11,10 @@ public abstract class Enemy : Damageable
     [SerializeField]
     protected float speed = 3f;
 
+    protected bool alerted;
+
+    private int raycastMask;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -18,6 +22,49 @@ public abstract class Enemy : Damageable
 
         rb = GetComponent<Rigidbody2D>();
         Assert.IsNotNull(rb);
+
+        alerted = false;
+        raycastMask = LayerMask.NameToLayer("Player") | LayerMask.NameToLayer("Obstacle");
+    }
+
+    public override void RecieveDamage(HitboxData damageInfo, GameObject collider = null)
+    {
+        currHealth -= damageInfo.Damage;
+
+        // TODO: add damage response effects
+        switch (damageInfo.Type)
+        {
+            case DamageType.None:
+
+                break;
+
+            case DamageType.Poke:
+
+                break;
+
+            case DamageType.Pierce:
+
+                break;
+
+            case DamageType.Slash:
+
+                break;
+
+            case DamageType.Impact:
+
+                break;
+        }
+
+        if (currHealth <= 0)
+        {
+            Kill();
+        }
+    }
+
+    // Alert the enemy if the player is nearby
+    public virtual void Alert()
+    {
+        alerted = true;
     }
 
     // Move the enemy towards the player 
@@ -81,5 +128,20 @@ public abstract class Enemy : Damageable
     public float DistanceFromPoint(Vector2 point)
     {
         return Vector2.Distance((Vector2)transform.position, point);
+    }
+
+    // Check if there is a sightline to the player
+    // distance is the distance from 
+    public bool SightlineToPlayer()
+    {
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, 
+                DirectionTowardsPlayer(), Mathf.Infinity, raycastMask);
+
+        if (hitInfo.collider == null || hitInfo.collider.tag != "Player")
+        {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -44,6 +44,10 @@ public class WeaponEquippedController : MonoBehaviour
             }
         }
     }
+    public int Ammo
+    {
+        get { return currAmmo; }
+    }
 
     public WeaponOrientation Orientation
     {
@@ -153,6 +157,7 @@ public class WeaponEquippedController : MonoBehaviour
         bulletSettings.damage = wm.baseDamage; // todo: add damage multiplier when added
         bulletSettings.maxDistance = wm.projectileMaxDist;
         bulletSettings.penetrateThrough = wm.projectilePenetration;
+        bulletSettings.damageSource = wm.ProjectileSource;
 
         // Spawn muzzle flash effect if provided
         if (wm.muzzleFlash != null)

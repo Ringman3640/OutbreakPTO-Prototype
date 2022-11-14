@@ -12,6 +12,7 @@ public class WeaponManager : MonoBehaviour
     public float inaccuracyAngle = 5f;
     public float projectileSpeed = 75f;
     public float projectileMaxDist = 100f;
+    public DamageSource projectileSource = DamageSource.Neutral;
     public int baseDamage = 10;
     public float rateOfFire = 0.2f;
     public bool automaticFire = true;
@@ -29,10 +30,21 @@ public class WeaponManager : MonoBehaviour
     private bool equipped;
     private Sprite unequippedSprite;
 
+    // Properties
+    public DamageSource ProjectileSource
+    {
+        get { return projectileSource; }
+        set { projectileSource = value; }
+    }
+    public int Ammo
+    {
+        get { return wec.Ammo; }
+    }
     public bool Equipped
     {
         get { return equipped; }
     }
+    
 
     // Start is called before the first frame update
     void Start()
@@ -47,8 +59,18 @@ public class WeaponManager : MonoBehaviour
         wec = transform.Find("Equipped State").GetComponent<WeaponEquippedController>();
         Assert.IsNotNull(wec);
 
-        equipped = false;
         unequippedSprite = sr.sprite;
+
+        // Check if weapon should start equipped
+        if (transform.parent != null && transform.parent.tag == "Weapon Inventory")
+        {
+            WeaponInventoryManager wim = transform.parent.GetComponent<WeaponInventoryManager>();
+            wim.AddWeapon(gameObject);
+        }
+        else
+        {
+            equipped = false;
+        }
     }
 
     public void Aim(Vector2 aimDirection)

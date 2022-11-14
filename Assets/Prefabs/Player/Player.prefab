@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 47306666311847390}
   m_Layer: 0
   m_Name: Shadow
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
   - {x: 0.1559433, y: -0.12507851, z: 0}
   m_ShapePathHash: 1376537051
   m_Mesh: {fileID: 0}
-  m_InstanceId: 47406
+  m_InstanceId: 52814
 --- !u!1 &47306666442117368
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 47306667136620424}
   m_Layer: 9
   m_Name: Hurtbox
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -272,6 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagList:
   - {fileID: 11400000, guid: 805a1a9dc56737f48a3162f0da0de762, type: 2}
+  - {fileID: 11400000, guid: 1d8032380af2ed34c92a5593bb2fcc35, type: 2}
 --- !u!70 &47306667136620426
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -482,6 +483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSlots: 3
+  projectileSource: 2
 --- !u!1 &47306667415951031
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,7 +694,7 @@ GameObject:
   - component: {fileID: 47306667882915527}
   - component: {fileID: 47306667882915524}
   - component: {fileID: 4403114489692158186}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -770,6 +772,7 @@ MonoBehaviour:
   msm: {fileID: 47306667882915527}
   wim: {fileID: 47306667263836355}
   pim: {fileID: 47306667882915524}
+  hb: {fileID: 47306667136620424}
   movementSpeed: 4
 --- !u!114 &47306667882915527
 MonoBehaviour:
@@ -905,7 +908,7 @@ GameObject:
   m_Component:
   - component: {fileID: 47306667882944801}
   - component: {fileID: 47306667882944814}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Physics Collider
   m_TagString: Player
   m_Icon: {fileID: 0}

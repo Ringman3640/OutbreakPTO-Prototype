@@ -14,6 +14,7 @@ public class PlayerManager : Damageable
     public MoveStateManager msm;
     public WeaponInventoryManager wim;
     public PlayerInteractManager pim;
+    public Hurtbox hb;
 
     // Speed of character
     public float movementSpeed = 4f;
@@ -67,6 +68,10 @@ public class PlayerManager : Damageable
     {
         get { return pointPosition; }
     }
+    public Vector3 HurtboxCenter
+    {
+        get { return hb.transform.position; }
+    }
 
     // Control and Animation restriction properties
     public ControlRestriction ControlBlockLevel
@@ -86,6 +91,7 @@ public class PlayerManager : Damageable
         Assert.IsNotNull(sm);
         Assert.IsNotNull(msm);
         Assert.IsNotNull(wim);
+        Assert.IsNotNull(hb);
 
         moveDirection = Vector3.zero;
         lookDirection = Vector3.zero;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2785790115393182231}
   m_Layer: 11
   m_Name: Physics Collider
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 2785790115785393323}
   - component: {fileID: 2785790115785393322}
   - component: {fileID: 2785790115785393325}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Popcorn
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 2785790116000866441}
   m_Layer: 9
   m_Name: Hurtbox
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 5688321132964236291}
   m_Layer: 8
   m_Name: Hitbox
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

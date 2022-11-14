@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 public class WeaponInventoryManager : MonoBehaviour
 {
     public int weaponSlots = 3;
+    public DamageSource projectileSource = DamageSource.Neutral;
 
     private LinkedList<GameObject> weaponList;
     private LinkedListNode<GameObject> current;
@@ -25,6 +26,18 @@ public class WeaponInventoryManager : MonoBehaviour
             {
                 DisableWeapons();
             }
+        }
+    }
+    public WeaponManager CurrentWeapon
+    {
+        get
+        {
+            if (current == null || current.Value == null)
+            {
+                return null;
+            }
+
+            return current.Value.GetComponent<WeaponManager>();
         }
     }
 
@@ -128,15 +141,17 @@ public class WeaponInventoryManager : MonoBehaviour
             weaponList.AddLast(weapon);
             DisableCurrent();
             current = weaponList.Last;
-            current.Value.GetComponent<WeaponManager>().Equip(gameObject);
         }
         else
         {
             DisableCurrent();
             current.Value.GetComponent<WeaponManager>().Unequip();
             current.Value = weapon;
-            current.Value.GetComponent<WeaponManager>().Equip(gameObject);
         }
+
+        WeaponManager wm = current.Value.GetComponent<WeaponManager>();
+        wm.Equip(gameObject);
+        wm.projectileSource = projectileSource;
 
         if (weaponsEnabled)
         {
