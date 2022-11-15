@@ -251,7 +251,7 @@ MonoBehaviour:
   - {x: 0.1559433, y: -0.12507851, z: 0}
   m_ShapePathHash: 1376537051
   m_Mesh: {fileID: 0}
-  m_InstanceId: 91628
+  m_InstanceId: 32662
 --- !u!1 &4843955850782383330
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,6 +572,12 @@ MonoBehaviour:
   rb: {fileID: 7410244785489951000}
   alertTrigger: {fileID: 6439924016967085330}
   playerAlertSignal: {fileID: 8395144913853656140, guid: 18f7ca048d9c17f4e9b2630a21c61ff1, type: 3}
+  effectsList:
+    defaultEffect: {fileID: 0}
+    pokeEffect: {fileID: 0}
+    pierceEffect: {fileID: 7327399839680687905, guid: 3bef040546c8d9b46982fb71dd731ee7, type: 3}
+    slashEffect: {fileID: 0}
+    slamEffect: {fileID: 0}
   startAlerted: 0
   startingDirection: {x: 0, y: 0}
   speed: 1.5

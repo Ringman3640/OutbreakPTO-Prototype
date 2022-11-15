@@ -15,7 +15,7 @@ public enum DamageType
     Poke,
     Pierce,
     Slash,
-    Impact
+    Slam
 }
 
 public enum DamageResponse

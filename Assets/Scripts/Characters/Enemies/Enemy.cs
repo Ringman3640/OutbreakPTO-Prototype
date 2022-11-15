@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+[System.Serializable]
+public struct SplatterEffects
+{
+    public GameObject defaultEffect;
+    public GameObject pokeEffect;
+    public GameObject pierceEffect;
+    public GameObject slashEffect;
+    public GameObject slamEffect;
+}
+
 public abstract class Enemy : Damageable
 {
     [SerializeField]
@@ -13,6 +23,9 @@ public abstract class Enemy : Damageable
 
     [SerializeField]
     private GameObject playerAlertSignal;
+
+    [SerializeField]
+    private SplatterEffects effectsList;
 
     [SerializeField]
     private bool startAlerted = false;
@@ -95,38 +108,37 @@ public abstract class Enemy : Damageable
     {
         currHealth -= damageInfo.Damage;
 
-        if (!alerted&& damageInfo.Source == DamageSource.Friendly)
-        {
-            Alert(true);
-        }
-
-        // TODO: add damage response effects
         switch (damageInfo.Type)
         {
             case DamageType.None:
-
+                SpawnEffect(effectsList.defaultEffect, damageInfo, collider);
                 break;
 
             case DamageType.Poke:
-
+                SpawnEffect(effectsList.pokeEffect, damageInfo, collider);
                 break;
 
             case DamageType.Pierce:
-
+                SpawnEffect(effectsList.pierceEffect, damageInfo, collider);
                 break;
 
             case DamageType.Slash:
-
+                SpawnEffect(effectsList.slashEffect, damageInfo, collider);
                 break;
 
-            case DamageType.Impact:
-
+            case DamageType.Slam:
+                SpawnEffect(effectsList.slamEffect, damageInfo, collider);
                 break;
         }
 
         if (currHealth <= 0)
         {
             Kill();
+        }
+
+        if (!alerted && damageInfo.Source == DamageSource.Friendly)
+        {
+            Alert(true);
         }
     }
 
@@ -232,7 +244,7 @@ public abstract class Enemy : Damageable
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position,
                 DirectionTowardsPlayer(), Mathf.Infinity, raycastMask);
 
-        if (hitInfo.collider == null || hitInfo.collider.tag != "Player")
+        if (hitInfo.collider == null || !hitInfo.collider.CompareTag("Player"))
         {
             return false;
         }
@@ -247,5 +259,24 @@ public abstract class Enemy : Damageable
                 direction, Mathf.Infinity, raycastMask);
 
         return hitInfo.distance;
+    }
+
+    private void SpawnEffect(GameObject effect, HitboxData hitInfo, GameObject collider)
+    {
+        if (effect == null)
+        {
+            return;
+        }
+
+        GameObject spawnedEffect = Instantiate(effect);
+        if (collider != null)
+        {
+            spawnedEffect.transform.position = collider.transform.position;
+            spawnedEffect.transform.right = collider.transform.right;
+        }
+        else
+        {
+            spawnedEffect.transform.position = transform.position;
+        }
     }
 }

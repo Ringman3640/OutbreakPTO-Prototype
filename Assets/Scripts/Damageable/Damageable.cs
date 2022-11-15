@@ -58,4 +58,16 @@ public abstract class Damageable : MonoBehaviour
 
         RecieveDamage(damageInfo, collider);
     }
+
+    // Heal method
+    // Heal the damageable object by the given amount of health
+    public virtual void Heal(int healAmount)
+    {
+        currHealth += healAmount;
+
+        if (currHealth > maxHealth)
+        {
+            currHealth = maxHealth;
+        }
+    }
 }

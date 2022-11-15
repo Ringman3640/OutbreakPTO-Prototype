@@ -146,6 +146,11 @@ public class PlayerManager : Damageable
             Kill();
         }
     }
+    public override void Heal(int healAmount)
+    {
+        base.Heal(healAmount);
+        UISystem.Inst.UpdateHealthBar();
+    }
 
     // Calculate moveDirection through the user's axis inputs
     private void GetMoveDirection()
