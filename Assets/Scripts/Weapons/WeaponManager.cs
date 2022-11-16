@@ -26,8 +26,6 @@ public class WeaponManager : MonoBehaviour
     public WeaponEquippedController wec = null;
     public GameObject equippedState = null;
     public GameObject unequippedState = null;
-    public GameObject worldWeaponStorage = null;
-    public GameObject worldProjectileStorage = null;
 
     private bool equipped;
     private Sprite unequippedSprite;
@@ -142,14 +140,7 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
-        if (worldWeaponStorage == null)
-        {
-            transform.parent = null;
-        }
-        else
-        {
-            transform.parent = worldWeaponStorage.transform;
-        }
+        StorageSystem.Inst.StoreItem(gameObject);
 
         wec.Remove();
         equippedState.SetActive(false);

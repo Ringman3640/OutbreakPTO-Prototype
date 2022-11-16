@@ -165,6 +165,7 @@ public class ProjectileController : MonoBehaviour
             GameObject effect = Instantiate(impactEffect);
             effect.transform.position = transform.position;
             effect.transform.right = transform.right;
+            StorageSystem.Inst.StoreEffect(effect);
         }
 
         Destroy(gameObject);

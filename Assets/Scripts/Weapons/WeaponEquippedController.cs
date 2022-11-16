@@ -148,10 +148,7 @@ public class WeaponEquippedController : MonoBehaviour
         // Spawn bullet projectile
         GameObject bullet = Instantiate(wm.projectile);
         bullet.transform.position = targTransform.position;
-        if (wm.worldProjectileStorage != null)
-        {
-            bullet.transform.parent = wm.worldProjectileStorage.transform;
-        }
+        StorageSystem.Inst.StoreProjectile(bullet);
 
         // Set bullet trajectory with inacurracy
         float inacurracyAngle = Random.Range(-wm.inaccuracyAngle / 2, wm.inaccuracyAngle / 2);
@@ -176,11 +173,8 @@ public class WeaponEquippedController : MonoBehaviour
             flash.GetComponent<MuzzleFlashController>().farLight.transform.position 
                     = holder.transform.position + transform.right;
 
-            // Set parent if given
-            if (wm.worldProjectileStorage != null)
-            {
-                flash.transform.parent = wm.worldProjectileStorage.transform;
-            }
+            // Set parent
+            StorageSystem.Inst.StoreEffect(flash);
         }
 
         lastFireTime = Time.time;

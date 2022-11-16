@@ -87,6 +87,7 @@ public class ItemDropper : MonoBehaviour
         {
             spawnedItem.transform.position = transform.position;
         }
+        StorageSystem.Inst.StoreItem(spawnedItem);
 
         Rigidbody2D rb = spawnedItem.GetComponent<Rigidbody2D>();
         if (rb != null && spawnAddForce.min * spawnAddForce.max > 0)

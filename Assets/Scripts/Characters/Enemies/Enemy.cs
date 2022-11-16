@@ -278,5 +278,7 @@ public abstract class Enemy : Damageable
         {
             spawnedEffect.transform.position = transform.position;
         }
+
+        StorageSystem.Inst.StoreEffect(spawnedEffect);
     }
 }
