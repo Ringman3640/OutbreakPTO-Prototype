@@ -125,7 +125,9 @@ public class ZombieFireState : MoveState
             case FireSubstate.CheckAmmo:
                 if (zombie.WeaponInventory.CurrentWeapon.Ammo <= 0)
                 {
-                    // stub, drop weapon
+                    zombie.WeaponInventory.RemoveCurrentWeapon();
+                    Completed = true;
+                    return;
                 }
                 substate = FireSubstate.Updating;
                 substateStart = Time.time;

@@ -77,6 +77,7 @@ public class ZombieEnemyManager : Enemy
     public override void Kill()
     {
         // stub, add death animation
+        wim.RemoveCurrentWeapon();
         Destroy(gameObject);
     }
 

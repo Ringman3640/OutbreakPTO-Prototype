@@ -528,7 +528,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 5
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -560,6 +560,7 @@ MonoBehaviour:
   automaticFire: 0
   projectilePenetration: 0
   ammoCapacity: 1000
+  unequipFlingForce: 2
   frontBackRange: 0.4
   sr: {fileID: 1575606730758908810}
   rb: {fileID: 2629266931243741084}

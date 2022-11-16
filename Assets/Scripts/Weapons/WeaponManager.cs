@@ -18,6 +18,7 @@ public class WeaponManager : MonoBehaviour
     public bool automaticFire = true;
     public bool projectilePenetration = false;
     public int ammoCapacity = 10;
+    public float unequipFlingForce = 2f;
     public float frontBackRange = 0.4f;
 
     public SpriteRenderer sr = null;
@@ -48,7 +49,7 @@ public class WeaponManager : MonoBehaviour
     
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Assert.IsNotNull(weaponName);
         Assert.IsNotNull(projectile);
@@ -125,6 +126,7 @@ public class WeaponManager : MonoBehaviour
         equippedState.SetActive(true);
         unequippedState.SetActive(false);
         sr.sprite = null;
+        rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Kinematic;
 
         wec.Initialize(caller);
@@ -154,6 +156,11 @@ public class WeaponManager : MonoBehaviour
         unequippedState.SetActive(true);
         sr.sprite = unequippedSprite;
         rb.bodyType = RigidbodyType2D.Dynamic;
+
+        // Apply unequip fling
+        Vector2 direction = new(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        direction.Normalize();
+        rb.AddForce(direction * unequipFlingForce, ForceMode2D.Impulse);
 
         equipped = false;
     }
