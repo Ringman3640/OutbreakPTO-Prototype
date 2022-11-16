@@ -7,10 +7,6 @@ public class ParticleBurstEffect : MonoBehaviour
     [SerializeField]
     private ParticleSystem ps;
 
-    private string parentPath = "Spawned Effects";
-    private static Transform parent;
-    private static bool parentInitialized = false;
-
     public ParticleSystem ParticleComp
     {
         get { return ps; }
@@ -19,18 +15,6 @@ public class ParticleBurstEffect : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        if (!parentInitialized)
-        {
-            parentInitialized = true;
-            parent = null;
-            GameObject parentObj = GameObject.Find(parentPath);
-            if (parentObj != null)
-            {
-                parent = parentObj.transform;
-            }
-        }
-        transform.parent = parent;
-
         StartDestroyTimer();
     }
 

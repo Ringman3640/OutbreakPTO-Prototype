@@ -269,6 +269,8 @@ public abstract class Enemy : Damageable
         }
 
         GameObject spawnedEffect = Instantiate(effect);
+        StorageSystem.Inst.StoreEffect(spawnedEffect);
+
         if (collider != null)
         {
             spawnedEffect.transform.position = collider.transform.position;
@@ -278,7 +280,5 @@ public abstract class Enemy : Damageable
         {
             spawnedEffect.transform.position = transform.position;
         }
-
-        StorageSystem.Inst.StoreEffect(spawnedEffect);
     }
 }

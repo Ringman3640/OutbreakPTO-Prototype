@@ -5,7 +5,6 @@ using UnityEngine;
 public class PopcornEnemyManager : Enemy
 {
     public Animator animator;
-    public GameObject splatterEffect;
 
     public float attackSpeed;
     public float attackDuration;
@@ -116,21 +115,5 @@ public class PopcornEnemyManager : Enemy
     {
         // Stub, add death animation
         Destroy(gameObject);
-    }
-    public override void RecieveDamage(HitboxData damageInfo, GameObject collider = null)
-    {
-        currHealth -= damageInfo.Damage;
-
-        if (collider != null && splatterEffect != null)
-        {
-            GameObject effect = Instantiate(splatterEffect);
-            effect.transform.position = collider.transform.position;
-            effect.transform.right = collider.transform.right;
-        }
-
-        if (currHealth <= 0)
-        {
-            Kill();
-        }
     }
 }
