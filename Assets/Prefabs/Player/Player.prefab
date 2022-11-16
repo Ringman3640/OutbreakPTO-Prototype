@@ -123,7 +123,7 @@ MonoBehaviour:
   - {x: 0.1559433, y: -0.12507851, z: 0}
   m_ShapePathHash: 1376537051
   m_Mesh: {fileID: 0}
-  m_InstanceId: 143172
+  m_InstanceId: 60658
 --- !u!1 &47306666442117368
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,7 +643,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -785,6 +785,7 @@ MonoBehaviour:
   input: {fileID: 4403114489692158186}
   rb: {fileID: 47306667882915526}
   sm: {fileID: 47306667088119520}
+  sg: {fileID: 47306667882915544}
   msm: {fileID: 47306667882915527}
   wim: {fileID: 47306667263836355}
   pim: {fileID: 47306667882915524}

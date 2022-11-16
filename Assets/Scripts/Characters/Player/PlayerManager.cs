@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.Assertions;
@@ -11,6 +12,7 @@ public class PlayerManager : Damageable
     public PlayerInput input;
     public Rigidbody2D rb;
     public SpriteManager sm;
+    public SortingGroup sg;
     public MoveStateManager msm;
     public WeaponInventoryManager wim;
     public PlayerInteractManager pim;
@@ -37,22 +39,22 @@ public class PlayerManager : Damageable
     public SpriteManager Sprite
     {
         get { return sm; }
-        set { sm = value; }
+    }
+    public SortingGroup SortGroup
+    {
+        get { return sg; }
     }
     public MoveStateManager MoveState
     {
         get { return msm; }
-        set { msm = value; }
     }
     public WeaponInventoryManager WeaponInventory
     {
         get { return wim; }
-        set { wim = value; }
     }
     public PlayerInteractManager Interactions
     {
         get { return pim; }
-        set { pim = value; }
     }
 
     // Directional and positional vector properties
@@ -89,6 +91,7 @@ public class PlayerManager : Damageable
 
         Assert.IsNotNull(rb);
         Assert.IsNotNull(sm);
+        Assert.IsNotNull(sg);
         Assert.IsNotNull(msm);
         Assert.IsNotNull(wim);
         Assert.IsNotNull(hb);
@@ -119,10 +122,7 @@ public class PlayerManager : Damageable
     // Damagable method implementation
     public override void Kill()
     {
-        // stub, add death animations
-        msm.FinishCurrentState();
-
-        Destroy(gameObject);
+        msm.AddMoveState(new CollapseDeathState(gameObject));
     }
     public override void RecieveDamage(HitboxData damageInfo, GameObject collider = null)
     {

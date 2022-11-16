@@ -9,7 +9,8 @@ public enum AnimAction
     Idle,
     Run,
     Roll,
-    Flinch
+    Flinch,
+    CollapseDeath
 }
 
 public enum AnimDirection

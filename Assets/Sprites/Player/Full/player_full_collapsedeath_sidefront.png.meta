@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c210bbfc0cc3b624abe4afe97bbf2ead
+guid: 3cd24172a959e5a4d80de4d1ee52d99f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,190 +117,232 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_full_roll_front_0
+      name: player_full_death1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 32
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57789aba8c922fe4a9a27b8e26b324ba
+      internalID: 2004738705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_full_death1_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 32
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cfd9c41138a1244f94c5061ed0e38da
+      internalID: 966801752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_full_death1_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 32
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c0e94e50db469245b9b6857cc9803c6
+      internalID: 1980184464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_full_death1_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 32
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f8182f5b85c7dc41af1140521f92114
+      internalID: -1692767937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_full_death1_4
       rect:
         serializedVersion: 2
         x: 0
         y: 64
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4da14b136c7205a48a785d431967bc48
-      internalID: 2131428763
+      spriteID: ea0e5cc14180a7d4ea86923a411046a7
+      internalID: 572102128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_full_roll_front_1
+      name: player_full_death1_5
       rect:
         serializedVersion: 2
         x: 32
         y: 64
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0d7d855d0f663b4b8cea28d4cc035ec
-      internalID: 1904799773
+      spriteID: da11211a9aae86148b35a30413f3ae07
+      internalID: -536718135
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_full_roll_front_2
+      name: player_full_death1_6
       rect:
         serializedVersion: 2
         x: 64
         y: 64
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc138e1601be5674ca2f50b28aa5dd5e
-      internalID: 1186686263
+      spriteID: a5b2bfc76f9dace499c8982d0a152475
+      internalID: -250126071
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_full_roll_front_3
+      name: player_full_death1_7
       rect:
         serializedVersion: 2
         x: 96
         y: 64
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0449290e0edea7429bf517a3851dd9d
-      internalID: 1962478012
+      spriteID: e709b6e2eb6d33c48885a9ba22016530
+      internalID: -995571566
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_full_roll_front_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bdd0fe7ba13f1da4a969a4dc43979c05
-      internalID: -638036053
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_full_roll_front_5
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b53e8e19d71e8724b948247dfca3a7b4
-      internalID: -1007187806
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_full_roll_front_6
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cc56185633819cc4489aafafe9dcd4e9
-      internalID: 1811512165
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_full_roll_front_7
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f8f55887fd4bfff428afe769f9afa0c0
-      internalID: -1820317559
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_full_roll_front_8
+      name: player_full_death1_8
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 52bde591059defb42963093c6a40a458
-      internalID: 392676997
+      spriteID: b66782dcc6f04754bb84ebc85f21a507
+      internalID: -250616295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_full_death1_9
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d3bfd0ee66874540998ba667f6b6769
+      internalID: -479840131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_full_death1_10
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 835cabd3bc41a28418e59588c0dc349c
+      internalID: 2034647666
       vertices: []
       indices: 
       edges: []
@@ -316,15 +358,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      player_full_roll_front_8: 392676997
-      player_full_roll_front_0: 2131428763
-      player_full_roll_front_2: 1186686263
-      player_full_roll_front_1: 1904799773
-      player_full_roll_front_3: 1962478012
-      player_full_roll_front_7: -1820317559
-      player_full_roll_front_5: -1007187806
-      player_full_roll_front_4: -638036053
-      player_full_roll_front_6: 1811512165
+      player_full_death1_6: -250126071
+      player_full_death1_0: 2004738705
+      player_full_death1_5: -536718135
+      player_full_death1_3: -1692767937
+      player_full_death1_10: 2034647666
+      player_full_death1_9: -479840131
+      player_full_death1_1: 966801752
+      player_full_death1_4: 572102128
+      player_full_death1_8: -250616295
+      player_full_death1_2: 1980184464
+      player_full_death1_7: -995571566
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

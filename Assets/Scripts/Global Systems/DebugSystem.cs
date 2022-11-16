@@ -9,6 +9,8 @@ public class DebugSystem : MonoBehaviour
 
     public GameObject spawnObject;
 
+    private float reloadPauseStart;
+
     public static DebugSystem Instance
     {
         get { return instance; }
@@ -55,4 +57,24 @@ public class DebugSystem : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
+
+    public void DeathReload()
+    {
+        StartCoroutine(DeathReloadCoroutine());
+    }
+
+    IEnumerator DeathReloadCoroutine()
+    {
+        reloadPauseStart = Time.unscaledTime;
+        Time.timeScale = 0f;
+        while (Time.unscaledTime - reloadPauseStart < 1f)
+        {
+            yield return null;
+        }
+
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        yield break;
+    }
+
 }

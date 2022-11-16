@@ -10,6 +10,9 @@ public class UISystem : MonoBehaviour
 
     private int prevMaxHealth;
 
+    [SerializeField]
+    private UIEffectsController uiEffects;
+
     // Component references
     [SerializeField]
     private HealthBarManager healthBar;
@@ -18,6 +21,12 @@ public class UISystem : MonoBehaviour
     public static UISystem Inst
     {
         get { return instance; }
+    }
+
+    // Effect property
+    public UIEffectsController Effects
+    {
+        get { return uiEffects; }
     }
 
     // Start is called before the first frame update
@@ -29,6 +38,7 @@ public class UISystem : MonoBehaviour
         }
 
         Assert.IsNotNull(instance);
+        Assert.IsNotNull(uiEffects);
         Assert.IsNotNull(healthBar);
 
         prevMaxHealth = 0;
