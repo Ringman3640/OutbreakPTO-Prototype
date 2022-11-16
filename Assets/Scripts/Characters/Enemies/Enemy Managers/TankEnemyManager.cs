@@ -5,6 +5,7 @@ using UnityEngine;
 public class TankEnemyManager : Enemy
 {
     public Animator animator;
+    public GameObject hitbox;
 
     public float attackSpeed;
     public float attackDuration;
@@ -19,7 +20,7 @@ public class TankEnemyManager : Enemy
 
     private float nextAction = 0f;
 
-    private float attackDistance = 1f;
+    private float attackDistance = 2f;
     private float distance = 0f;
     private bool directionLock = false;
 
@@ -29,6 +30,8 @@ public class TankEnemyManager : Enemy
     protected override void Start()
     {
         base.Start();
+
+        hitbox.SetActive(false);
     }
 
     // Update is called once per frame
@@ -85,6 +88,7 @@ public class TankEnemyManager : Enemy
                     animator.SetBool("idle", false);
                     animator.SetBool("attacking", true);
                     attacking = true;
+                    hitbox.SetActive(true);
                     nextAction = Time.time + attackDuration;
                     rb.velocity = new Vector2(0, 0);
                     //rb.velocity = attackDirection * attackSpeed;
@@ -98,6 +102,7 @@ public class TankEnemyManager : Enemy
             if (Time.time > nextAction)
             {
                 attacking = false;
+                hitbox.SetActive(false);
                 directionLock = false;
                 animator.SetBool("attacking", false);
                 

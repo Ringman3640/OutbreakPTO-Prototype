@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3127604335592601356}
   - component: {fileID: 3127604335592601363}
-  - component: {fileID: 3127604335592601357}
   - component: {fileID: 3127604335592601362}
+  - component: {fileID: 181515354323163416}
   m_Layer: 9
   m_Name: Hurtbox
   m_TagString: Enemy
@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3127604335592601359}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.22, y: -0.34092, z: 0}
-  m_LocalScale: {x: 3.5056548, y: 1.5474184, z: 1.4563937}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3127604337419719474}
@@ -49,22 +49,6 @@ MonoBehaviour:
   tagList:
   - {fileID: 11400000, guid: 1d8032380af2ed34c92a5593bb2fcc35, type: 2}
   - {fileID: 11400000, guid: 805a1a9dc56737f48a3162f0da0de762, type: 2}
---- !u!58 &3127604335592601357
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3127604335592601359}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.12}
-  serializedVersion: 2
-  m_Radius: 0.47
 --- !u!114 &3127604335592601362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,6 +65,22 @@ MonoBehaviour:
   ignoreNeutral: 0
   ignoreFriendly: 0
   ignoreHostile: 1
+--- !u!70 &181515354323163416
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3127604335592601359}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.07}
+  m_Size: {x: 1.69, y: 2.02}
+  m_Direction: 0
 --- !u!1 &3127604337006562702
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +287,7 @@ MonoBehaviour:
   startingDirection: {x: 0, y: 0}
   speed: 3
   animator: {fileID: 3127604337419719478}
+  hitbox: {fileID: 4246925838869847807}
   attackSpeed: 1
   attackDuration: 0.5
   attacking: 0
@@ -365,7 +366,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6008142974291826721}
   - component: {fileID: 5799462348002672236}
-  - component: {fileID: 4233442147206839776}
+  - component: {fileID: 1969683971422973117}
   - component: {fileID: 4845485234476489624}
   m_Layer: 8
   m_Name: Hitbox
@@ -382,8 +383,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4246925838869847807}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.31, y: -0.16, z: 0}
-  m_LocalScale: {x: 2.5602574, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3127604337419719474}
@@ -404,7 +405,7 @@ MonoBehaviour:
   tagList:
   - {fileID: 11400000, guid: 1d8032380af2ed34c92a5593bb2fcc35, type: 2}
   - {fileID: 11400000, guid: 805a1a9dc56737f48a3162f0da0de762, type: 2}
---- !u!58 &4233442147206839776
+--- !u!58 &1969683971422973117
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -417,9 +418,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.12}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.47
+  m_Radius: 1.61
 --- !u!114 &4845485234476489624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,7 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startEnabled: 1
-  damage: 10
+  damage: 60
   damageSource: 4
   damageType: 4
   damageReponse: 1
