@@ -10,7 +10,8 @@ public class TankEnemyManager : Enemy
     public float attackDuration;
 
     public bool attacking = false;
-    public string direction = " ";
+    public string vertical = " ";
+    public string horizontal = " ";
 
     public float attackCoolDown;
 
@@ -18,7 +19,7 @@ public class TankEnemyManager : Enemy
 
     private float nextAction = 0f;
 
-    private float attackDistance = 2f;
+    private float attackDistance = 1f;
     private float distance = 0f;
     private bool directionLock = false;
 
@@ -43,13 +44,21 @@ public class TankEnemyManager : Enemy
 
         //update sprite 
         Vector3 characterScale = transform.localScale;
-        if (direction.Equals("right") && !directionLock)
+        if (horizontal.Equals("right") && !directionLock)
         {
-            characterScale.x = -(Mathf.Abs(transform.localScale.x));
+            if(vertical.Equals("down")){
+                characterScale.x = -(Mathf.Abs(transform.localScale.x));
+            }else{
+                characterScale.x = Mathf.Abs(transform.localScale.x);
+            }
         }
-        if (direction.Equals("left") && !directionLock)
+        if (horizontal.Equals("left") && !directionLock)
         {
-            characterScale.x = Mathf.Abs(transform.localScale.x);
+            if(vertical.Equals("down")){
+                characterScale.x = Mathf.Abs(transform.localScale.x);
+            }else{
+                characterScale.x = -(Mathf.Abs(transform.localScale.x));
+            }
         }
         transform.localScale = characterScale;
 
@@ -61,21 +70,25 @@ public class TankEnemyManager : Enemy
             {
                 //transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
                 MoveTowardsPoint(Player.transform.position);
-
+                animator.SetBool("idle", false);
             }
             else
             {
                 StopMovement();
+                animator.SetBool("idle", true);
+                
 
                 //if cooldown time if over then attack
                 if (Time.time > nextAction)
                 {
                     attackDirection = Player.transform.position - transform.position;
+                    animator.SetBool("idle", false);
+                    animator.SetBool("attacking", true);
                     attacking = true;
                     nextAction = Time.time + attackDuration;
-                    rb.velocity = attackDirection * attackSpeed;
+                    rb.velocity = new Vector2(0, 0);
+                    //rb.velocity = attackDirection * attackSpeed;
                     directionLock = true;
-                    animator.SetBool("attacking", true);
                 }
             }
         }
@@ -87,8 +100,9 @@ public class TankEnemyManager : Enemy
                 attacking = false;
                 directionLock = false;
                 animator.SetBool("attacking", false);
-                rb.velocity = new Vector2(0, 0);
+                
                 nextAction = Time.time + attackCoolDown;
+                animator.SetBool("idle", true);
             }
         }
 
@@ -101,6 +115,23 @@ public class TankEnemyManager : Enemy
         float x = currDirection.x;
         float y = currDirection.y;
 
+        if(x <= 0){
+            horizontal = "right";
+        }else{
+            horizontal = "left";
+        }
+
+        if(y <= 0){
+            animator.SetInteger("vertical", 1);
+            vertical = "down";
+
+        }else{
+            animator.SetInteger("vertical", 2);
+            vertical = "up";
+
+        }
+
+        /*
         if (Mathf.Abs(x) >= Mathf.Abs(y))
         {
             animator.SetInteger("direction", 1);
@@ -127,6 +158,7 @@ public class TankEnemyManager : Enemy
                 direction = "down";
             }
         }
+        */
 
     }
 
