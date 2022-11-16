@@ -8,6 +8,9 @@ public class ItemBoxManager : Damageable
     [SerializeField]
     private SpriteEffects sEffects;
 
+    [SerializeField]
+    private ItemDropper dropper;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -19,7 +22,8 @@ public class ItemBoxManager : Damageable
     // Damageable method implementations
     public override void Kill()
     {
-        // stub, spawn items
+        // stub, play destroy animation
+        dropper.DropItems();
         Destroy(gameObject);
     }
     public override void RecieveDamage(HitboxData damageInfo, GameObject collider = null)

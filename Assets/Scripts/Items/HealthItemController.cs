@@ -29,7 +29,7 @@ public class HealthItemController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (maxDist < 0)
+        if (maxDist <= 0 && collision.gameObject.HasTag("Player"))
         {
             maxDist = Vector3.Distance(transform.position, collision.transform.position);
         }
@@ -59,6 +59,7 @@ public class HealthItemController : MonoBehaviour
 
         Vector2 direction = (Vector2)player.transform.position - (Vector2)transform.position;
         direction.Normalize();
-        rb.AddForce(direction * ((1 - dist / maxDist) * attractionForce));
+
+        rb.AddForce(direction * ((1 - dist / maxDist) * attractionForce), ForceMode2D.Force);
     }
 }

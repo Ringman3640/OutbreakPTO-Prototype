@@ -123,7 +123,7 @@ MonoBehaviour:
   - {x: 0.1559433, y: -0.12507851, z: 0}
   m_ShapePathHash: 1376537051
   m_Mesh: {fileID: 0}
-  m_InstanceId: 75642
+  m_InstanceId: 143172
 --- !u!1 &47306666442117368
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +222,7 @@ MonoBehaviour:
   - {fileID: 47306667771707796}
   - {fileID: 47306667233843325}
   - {fileID: 47306667994254531}
-  defaultFlashColor: {r: 1, g: 0, b: 0, a: 1}
+  defaultFlashColor: {r: 1, g: 0, b: 0, a: 0.78431374}
   defaultFlashDuration: 0.1
 --- !u!1 &47306667136620428
 GameObject:

@@ -21,6 +21,7 @@ public class WeaponManager : MonoBehaviour
     public float frontBackRange = 0.4f;
 
     public SpriteRenderer sr = null;
+    public Rigidbody2D rb = null;
     public WeaponEquippedController wec = null;
     public GameObject equippedState = null;
     public GameObject unequippedState = null;
@@ -52,6 +53,7 @@ public class WeaponManager : MonoBehaviour
         Assert.IsNotNull(weaponName);
         Assert.IsNotNull(projectile);
         Assert.IsNotNull(sr);
+        Assert.IsNotNull(rb);
         Assert.IsNotNull(wec);
         Assert.IsNotNull(equippedState);
         Assert.IsNotNull(unequippedState);
@@ -60,6 +62,7 @@ public class WeaponManager : MonoBehaviour
         Assert.IsNotNull(wec);
 
         unequippedSprite = sr.sprite;
+        rb.bodyType = RigidbodyType2D.Dynamic;
 
         // Check if weapon should start equipped
         if (transform.parent != null && transform.parent.tag == "Weapon Inventory")
@@ -122,6 +125,7 @@ public class WeaponManager : MonoBehaviour
         equippedState.SetActive(true);
         unequippedState.SetActive(false);
         sr.sprite = null;
+        rb.bodyType = RigidbodyType2D.Kinematic;
 
         wec.Initialize(caller);
 
@@ -149,6 +153,7 @@ public class WeaponManager : MonoBehaviour
         equippedState.SetActive(false);
         unequippedState.SetActive(true);
         sr.sprite = unequippedSprite;
+        rb.bodyType = RigidbodyType2D.Dynamic;
 
         equipped = false;
     }

@@ -173,6 +173,7 @@ GameObject:
   - component: {fileID: 8382579698543984504}
   - component: {fileID: 3171634582474830075}
   - component: {fileID: 8640004585670629535}
+  - component: {fileID: 829945050657180054}
   m_Layer: 9
   m_Name: Item Box
   m_TagString: Untagged
@@ -289,3 +290,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 50
   sEffects: {fileID: 2063696116698087019}
+  dropper: {fileID: 829945050657180054}
+--- !u!114 &829945050657180054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6121820155483505243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7007415252424d844b5d5ca84ecf8a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemList: []
+  spawnTarget: {fileID: 0}
+  spawnAddForce:
+    min: 1
+    max: 5
+  minDroppedItems: 10
+  maxDroppedItems: 10

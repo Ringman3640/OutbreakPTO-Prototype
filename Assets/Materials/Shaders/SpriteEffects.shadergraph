@@ -11,6 +11,9 @@
         },
         {
             "m_Id": "e15b153513a64990aa55366d5a7e42a5"
+        },
+        {
+            "m_Id": "85d2f18cf1434c84bcb6feb8f9d5a208"
         }
     ],
     "m_Keywords": [],
@@ -907,6 +910,28 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.BooleanShaderProperty",
+    "m_ObjectId": "85d2f18cf1434c84bcb6feb8f9d5a208",
+    "m_Guid": {
+        "m_GuidSerialized": "5b10d2ee-d673-4f7a-a805-ef5ce8777ad4"
+    },
+    "m_Name": "Highlight",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Highlight",
+    "m_DefaultReferenceName": "_Highlight",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": false
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "945fce0d0cd64caa811a122606aa73a4",
     "m_Id": 0,
@@ -1015,6 +1040,9 @@
         },
         {
             "m_Id": "e15b153513a64990aa55366d5a7e42a5"
+        },
+        {
+            "m_Id": "85d2f18cf1434c84bcb6feb8f9d5a208"
         }
     ]
 }
