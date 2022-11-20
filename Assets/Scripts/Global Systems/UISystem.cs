@@ -17,6 +17,9 @@ public class UISystem : MonoBehaviour
     [SerializeField]
     private HealthBarManager healthBar;
 
+    [SerializeField]
+    private MessageBoxManager messageBox;
+
     // Instance property
     public static UISystem Inst
     {
@@ -40,6 +43,7 @@ public class UISystem : MonoBehaviour
         Assert.IsNotNull(instance);
         Assert.IsNotNull(uiEffects);
         Assert.IsNotNull(healthBar);
+        Assert.IsNotNull(messageBox);
 
         prevMaxHealth = 0;
     }
@@ -66,5 +70,17 @@ public class UISystem : MonoBehaviour
     public void IncreaseHealthBar(float increaseWidth)
     {
         healthBar.IncreaseWidth(increaseWidth);
+    }
+
+    // Show a message to the player 
+    public void ShowMessage(string text)
+    {
+        messageBox.Show(text);
+    }
+
+    // Remove the shown message from the screen
+    public void RemoveMessage()
+    {
+        messageBox.Hide();
     }
 }

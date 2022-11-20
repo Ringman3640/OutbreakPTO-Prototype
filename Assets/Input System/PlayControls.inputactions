@@ -182,6 +182,17 @@
                 },
                 {
                     "name": "",
+                    "id": "dc28375c-8d91-4f4b-8f38-40182bef2993",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "577a65a7-8274-498d-8f11-a7988ae89e86",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -206,6 +217,17 @@
                     "name": "",
                     "id": "75f70877-7883-44f2-8084-536fa01d5b18",
                     "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "810e2979-bf28-48a9-9ee8-d97b56d18439",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",

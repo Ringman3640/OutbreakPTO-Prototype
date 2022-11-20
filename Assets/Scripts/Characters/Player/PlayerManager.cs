@@ -21,6 +21,9 @@ public class PlayerManager : Damageable
     // Speed of character
     public float movementSpeed = 4f;
 
+    // Cooldown of roll action
+    public float rollCoolDown = 4f;
+
     // Indicates if the player is using a gamepad (otherwise keyboard)
     private bool usingGamepad = false;
 
@@ -29,6 +32,9 @@ public class PlayerManager : Damageable
     private Vector3 moveDirection;
     private Vector3 lookDirection;
     private Vector3 pointPosition;
+
+    // Indicates the time of the last roll
+    private float lastRoll;
 
     // Player component properties
     public Rigidbody2D Rigidbody
@@ -99,6 +105,8 @@ public class PlayerManager : Damageable
         moveDirection = Vector3.zero;
         lookDirection = Vector3.zero;
         pointPosition = Vector3.zero;
+
+        lastRoll = 0f;
 
         PlayerSystem.Inst.SetPlayer(gameObject);
 
@@ -199,7 +207,11 @@ public class PlayerManager : Damageable
     {
         if (input.actions["Roll"].triggered)
         {
-            msm.AddMoveState(new RollState(gameObject));
+            if (Time.time - lastRoll >= rollCoolDown)
+            {
+                lastRoll = Time.time;
+                msm.AddMoveState(new RollState(gameObject));
+            }
         }
 
         if (input.actions["Interact"].triggered)
