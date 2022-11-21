@@ -18,8 +18,9 @@ public class ReloadPistolState : MoveState
     protected override void Initialize(GameObject caller)
     {
         player = caller.GetComponent<PlayerManager>();
-        player.WeaponInventory.DisableWeapons();
 
+        player.WeaponInventory.DisableWeapons();
+        player.SpeedMultiplier = 0.9f;
         player.Reloading = true;
 
         player.Sprite.Direction = AnimDirection.SideFront;
@@ -56,6 +57,7 @@ public class ReloadPistolState : MoveState
         player.Sprite.OverrideSequences();
         player.Sprite.DisableFront();
         player.WeaponInventory.EnableWeapons();
+        player.SpeedMultiplier = 1f;
         player.Reloading = false;
     }
 }

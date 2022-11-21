@@ -33,6 +33,9 @@ public class PlayerManager : Damageable
     private Vector3 lookDirection;
     private Vector3 pointPosition;
 
+    // Player speed modifier
+    private float speedMultiplier;
+
     // Indicates the time of the last roll
     private float lastRoll;
 
@@ -92,6 +95,11 @@ public class PlayerManager : Damageable
             return msm.ControlBlockLevel;
         }
     }
+    public float SpeedMultiplier
+    {
+        get { return speedMultiplier; }
+        set { speedMultiplier = value; }
+    }
     public bool Reloading
     {
         get { return reloading; }
@@ -114,6 +122,7 @@ public class PlayerManager : Damageable
         lookDirection = Vector3.zero;
         pointPosition = Vector3.zero;
 
+        speedMultiplier = 1f;
         lastRoll = 0f;
         reloading = false;
 
@@ -237,11 +246,19 @@ public class PlayerManager : Damageable
 
         if (input.actions["Next Weapon"].triggered)
         {
+            if (reloading)
+            {
+                msm.FinishCurrentState();
+            }
             wim.RotateNextWeapon();
             UISystem.Inst.UpdateAmmoCounter();
         }
         else if (input.actions["Prev Weapon"].triggered)
         {
+            if (reloading)
+            {
+                msm.FinishCurrentState();
+            }
             wim.RotatePrevWeapon();
             UISystem.Inst.UpdateAmmoCounter();
         }
@@ -311,7 +328,7 @@ public class PlayerManager : Damageable
             return;
         }
 
-        rb.velocity = moveDirection * movementSpeed;
+        rb.velocity = moveDirection * (movementSpeed * speedMultiplier);
     }
 
     // Update the player's sprite animation for basic movement

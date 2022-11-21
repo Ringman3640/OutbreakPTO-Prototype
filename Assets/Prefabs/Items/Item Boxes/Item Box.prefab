@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2808794317666616820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0016, y: -0.206, z: 0}
+  m_LocalPosition: {x: 0.0016, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -52,13 +52,13 @@ MonoBehaviour:
   m_SelfShadows: 0
   m_ApplyToSortingLayers: 000000002d1c2f3e732985c9c3390b85816dc2cb013672a915856d2e
   m_ShapePath:
-  - {x: -0.439259, y: -0.062664986, z: 0}
-  - {x: -0.43804422, y: 0.43682957, z: 0}
-  - {x: 0.43318492, y: 0.43925905, z: 0}
-  - {x: 0.43318492, y: -0.0602355, z: 0}
-  m_ShapePathHash: -996360974
+  - {x: -0.4391628, y: -0.2687974, z: 0}
+  - {x: -0.4391506, y: 0.6374488, z: 0}
+  - {x: 0.4358414, y: 0.63742113, z: 0}
+  - {x: 0.4358301, y: -0.26880932, z: 0}
+  m_ShapePathHash: -240547876
   m_Mesh: {fileID: 0}
-  m_InstanceId: -265118
+  m_InstanceId: 51126
 --- !u!1 &3706199099346412893
 GameObject:
   m_ObjectHideFlags: 0
