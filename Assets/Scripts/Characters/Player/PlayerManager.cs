@@ -36,6 +36,9 @@ public class PlayerManager : Damageable
     // Indicates the time of the last roll
     private float lastRoll;
 
+    // Indicates if the player is currently in a reloading move state
+    private bool reloading;
+
     // Player component properties
     public Rigidbody2D Rigidbody
     {
@@ -81,13 +84,18 @@ public class PlayerManager : Damageable
         get { return hb.transform.position; }
     }
 
-    // Control and Animation restriction properties
+    // Player info properties
     public ControlRestriction ControlBlockLevel
     {
         get
         {
             return msm.ControlBlockLevel;
         }
+    }
+    public bool Reloading
+    {
+        get { return reloading; }
+        set { reloading = value; }
     }
 
     // Start is called before the first frame update
@@ -107,6 +115,7 @@ public class PlayerManager : Damageable
         pointPosition = Vector3.zero;
 
         lastRoll = 0f;
+        reloading = false;
 
         PlayerSystem.Inst.SetPlayer(gameObject);
 
@@ -222,10 +231,34 @@ public class PlayerManager : Damageable
         if (input.actions["Next Weapon"].triggered)
         {
             wim.RotateNextWeapon();
+            UISystem.Inst.UpdateAmmoCounter();
         }
         else if (input.actions["Prev Weapon"].triggered)
         {
             wim.RotatePrevWeapon();
+            UISystem.Inst.UpdateAmmoCounter();
+        }
+
+        if (input.actions["Reload"].triggered)
+        {
+            WeaponManager wm = WeaponInventory.CurrentWeapon;
+            if (wm != null && wm.Ammo < wm.AmmoCapacity)
+            {
+                switch (wm.weaponName)
+                {
+                    case "weapon_pistol":
+                        msm.AddMoveState(new ReloadPistolState(gameObject, wm));
+                        break;
+
+                    case "weapon_ar":
+                        msm.AddMoveState(new ReloadARState(gameObject, wm));
+                        break;
+
+                    case "weapon_mg":
+                        msm.AddMoveState(new ReloadMGState(gameObject, wm));
+                        break;
+                }
+            }
         }
     }
 
@@ -252,6 +285,8 @@ public class PlayerManager : Damageable
             {
                 wim.FireCurrentWeapon(false);
             }
+
+            UISystem.Inst.UpdateAmmoCounter();
         }
     }
 

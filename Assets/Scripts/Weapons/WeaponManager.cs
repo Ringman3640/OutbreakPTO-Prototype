@@ -40,6 +40,10 @@ public class WeaponManager : MonoBehaviour
     {
         get { return wec.Ammo; }
     }
+    public int AmmoCapacity
+    {
+        get { return ammoCapacity; }
+    }
     public bool Equipped
     {
         get { return equipped; }
@@ -108,6 +112,16 @@ public class WeaponManager : MonoBehaviour
         }
 
         return wec.Fire();
+    }
+
+    public void Reload()
+    {
+        if (!equipped)
+        {
+            return;
+        }
+
+        wec.Reload();
     }
 
     public bool Equip(GameObject caller)

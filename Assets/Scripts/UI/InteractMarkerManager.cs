@@ -32,6 +32,14 @@ public class InteractMarkerManager : MonoBehaviour
         InputUser.onChange += ControlsChanged;
     }
 
+    void OnDisable()
+    {
+        Vector2 size = markerTransform.sizeDelta;
+        size.y = 0f;
+        markerTransform.sizeDelta = size;
+        shown = false;
+    }
+
     public void Show()
     {
         if (!shown && !showCoroutineStarted)

@@ -183,6 +183,11 @@ public class WeaponEquippedController : MonoBehaviour
         return true;
     }
 
+    public void Reload()
+    {
+        currAmmo = wm.ammoCapacity;
+    }
+
     private void SetDirection(Vector3 direction)
     {
         transform.right = direction;

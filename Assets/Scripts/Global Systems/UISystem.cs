@@ -20,6 +20,9 @@ public class UISystem : MonoBehaviour
     [SerializeField]
     private MessageBoxManager messageBox;
 
+    [SerializeField]
+    private AmmoCounterManager ammoCounter;
+
     // Instance property
     public static UISystem Inst
     {
@@ -64,6 +67,11 @@ public class UISystem : MonoBehaviour
             healthBar.IncreaseWidth(player.MaxHealth - prevMaxHealth);
             prevMaxHealth = player.MaxHealth;
         }
+    }
+
+    public void UpdateAmmoCounter()
+    {
+        ammoCounter.UpdateCounter();
     }
 
     // Increase the size of the UI health bar
