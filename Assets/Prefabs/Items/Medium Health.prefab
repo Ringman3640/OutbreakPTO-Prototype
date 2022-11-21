@@ -5011,7 +5011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3167544671058513216}
-  rb: {fileID: 3167544671058513216}
+  cc: {fileID: 3167544671058513219}
   healAmount: 50
   collectDist: 0.3
   attractionForce: 40

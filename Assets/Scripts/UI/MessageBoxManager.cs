@@ -29,6 +29,17 @@ public class MessageBoxManager : MonoBehaviour
         Assert.IsNotNull(messageBoxTransform);
     }
 
+    void OnDisable()
+    {
+        Vector2 size = messageBoxTransform.sizeDelta;
+        size.x = 0f;
+        messageBoxTransform.sizeDelta = size;
+
+        shown = false;
+        showCoroutineStarted = false;
+        hideCoroutineStarted = false;
+    }
+
     public void Show(string text)
     {
         if (!shown && !showCoroutineStarted)

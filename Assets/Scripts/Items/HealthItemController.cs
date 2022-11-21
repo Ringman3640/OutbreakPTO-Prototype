@@ -9,6 +9,9 @@ public class HealthItemController : MonoBehaviour
     private Rigidbody2D rb;
 
     [SerializeField]
+    private CircleCollider2D cc;
+
+    [SerializeField]
     private int healAmount = 50;
 
     [SerializeField]
@@ -24,7 +27,7 @@ public class HealthItemController : MonoBehaviour
     {
         Assert.IsNotNull(rb);
 
-        maxDist = -1;
+        maxDist = cc.radius + 1f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -60,6 +63,12 @@ public class HealthItemController : MonoBehaviour
         Vector2 direction = (Vector2)player.transform.position - (Vector2)transform.position;
         direction.Normalize();
 
-        rb.AddForce(direction * ((1 - dist / maxDist) * attractionForce), ForceMode2D.Force);
+        float distForce = 1 - dist / maxDist;
+        if (distForce < 0)
+        {
+            distForce = 0;
+        }
+
+        rb.AddForce(direction * (distForce * attractionForce), ForceMode2D.Force);
     }
 }

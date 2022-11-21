@@ -8,12 +8,13 @@ public class UISystem : MonoBehaviour
     // Singleton instance
     private static UISystem instance;
 
-    private int prevMaxHealth;
-
     [SerializeField]
     private UIEffectsController uiEffects;
 
     // Component references
+    [SerializeField]
+    private GameObject overlayCanvas;
+
     [SerializeField]
     private HealthBarManager healthBar;
 
@@ -28,6 +29,10 @@ public class UISystem : MonoBehaviour
     {
         get { return instance; }
     }
+    
+    // Previous recorded max health of the player
+    private int prevMaxHealth;
+
 
     // Effect property
     public UIEffectsController Effects
@@ -43,12 +48,23 @@ public class UISystem : MonoBehaviour
             instance = this;
         }
 
-        Assert.IsNotNull(instance);
+        Assert.IsNotNull(overlayCanvas);
         Assert.IsNotNull(uiEffects);
         Assert.IsNotNull(healthBar);
         Assert.IsNotNull(messageBox);
 
         prevMaxHealth = 0;
+        HideUI();
+    }
+
+    public void ShowUI()
+    {
+        overlayCanvas.SetActive(true);
+    }
+
+    public void HideUI()
+    {
+        overlayCanvas.SetActive(false);
     }
 
     // Update the UI health bar given the player's current's status
