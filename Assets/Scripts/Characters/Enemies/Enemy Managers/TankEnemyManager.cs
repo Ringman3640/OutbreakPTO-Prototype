@@ -20,7 +20,7 @@ public class TankEnemyManager : Enemy
 
     private float nextAction = 0f;
 
-    private float attackDistance = 2f;
+    private float attackDistance = 1.5f;
     private float distance = 0f;
     private bool directionLock = false;
 
@@ -88,7 +88,7 @@ public class TankEnemyManager : Enemy
                     animator.SetBool("idle", false);
                     animator.SetBool("attacking", true);
                     attacking = true;
-                    hitbox.SetActive(true);
+                    //hitbox.SetActive(true);
                     nextAction = Time.time + attackDuration;
                     rb.velocity = new Vector2(0, 0);
                     //rb.velocity = attackDirection * attackSpeed;
@@ -108,6 +108,10 @@ public class TankEnemyManager : Enemy
                 
                 nextAction = Time.time + attackCoolDown;
                 animator.SetBool("idle", true);
+            }else{
+                if(Time.time > (nextAction - 0.20)){
+                    hitbox.SetActive(true);
+                }
             }
         }
 
