@@ -76,13 +76,13 @@ public class UISystem : MonoBehaviour
             return;
         }
 
-        healthBar.SetFillPosition((float)player.Health / (float)player.MaxHealth);
-
         if (player.MaxHealth != prevMaxHealth)
         {
             healthBar.IncreaseWidth(player.MaxHealth - prevMaxHealth);
             prevMaxHealth = player.MaxHealth;
         }
+
+        healthBar.SetFillPosition((float)player.Health / (float)player.MaxHealth);
     }
 
     public void UpdateAmmoCounter()

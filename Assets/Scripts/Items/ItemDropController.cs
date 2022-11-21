@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class HealthItemController : MonoBehaviour
+public enum ItemEffect
+{
+    Heal,
+    UpgradeHealth
+}
+
+public class ItemDropController : MonoBehaviour
 {
     [SerializeField]
     private Rigidbody2D rb;
@@ -12,7 +18,13 @@ public class HealthItemController : MonoBehaviour
     private CircleCollider2D cc;
 
     [SerializeField]
+    private ItemEffect effect;
+
+    [SerializeField]
     private int healAmount = 50;
+
+    [SerializeField]
+    private int healthUpgradeAmount = 50;
 
     [SerializeField]
     private float collectDist = 0.2f;
@@ -55,7 +67,7 @@ public class HealthItemController : MonoBehaviour
 
         if (dist <= collectDist)
         {
-            player.GetComponent<Damageable>().Heal(healAmount);
+            EnactEffect(player);
             Destroy(gameObject);
             return;
         }
@@ -70,5 +82,21 @@ public class HealthItemController : MonoBehaviour
         }
 
         rb.AddForce(direction * (distForce * attractionForce), ForceMode2D.Force);
+    }
+
+    private void EnactEffect(GameObject playerObj)
+    {
+        PlayerManager player = playerObj.GetComponent<PlayerManager>();
+
+        switch (effect)
+        {
+            case ItemEffect.Heal:
+                player.Heal(healAmount);
+                return;
+
+            case ItemEffect.UpgradeHealth:
+                player.IncreaseHealth(healthUpgradeAmount);
+                return;
+        }
     }
 }

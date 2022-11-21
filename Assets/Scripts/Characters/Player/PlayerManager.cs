@@ -168,6 +168,12 @@ public class PlayerManager : Damageable
         base.Heal(healAmount);
         UISystem.Inst.UpdateHealthBar();
     }
+    public override void IncreaseHealth(int increaseAmount)
+    {
+        base.IncreaseHealth(increaseAmount);
+        currHealth = maxHealth;
+        UISystem.Inst.UpdateHealthBar();
+    }
 
     // Calculate moveDirection through the user's axis inputs
     private void GetMoveDirection()
@@ -226,6 +232,7 @@ public class PlayerManager : Damageable
         if (input.actions["Interact"].triggered)
         {
             pim.Interact();
+            UISystem.Inst.UpdateAmmoCounter();
         }
 
         if (input.actions["Next Weapon"].triggered)
