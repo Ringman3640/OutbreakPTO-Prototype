@@ -5,7 +5,7 @@ using UnityEngine;
 public class TankEnemyManager : Enemy
 {
     public Animator animator;
-    public GameObject hitbox;
+    public Hitbox hitbox;
 
     public float attackSpeed;
     public float attackDuration;
@@ -30,8 +30,6 @@ public class TankEnemyManager : Enemy
     protected override void Start()
     {
         base.Start();
-
-        hitbox.SetActive(false);
     }
 
     // Update is called once per frame
@@ -102,7 +100,7 @@ public class TankEnemyManager : Enemy
             if (Time.time > nextAction)
             {
                 attacking = false;
-                hitbox.SetActive(false);
+                hitbox.Disable();
                 directionLock = false;
                 animator.SetBool("attacking", false);
                 
@@ -110,7 +108,7 @@ public class TankEnemyManager : Enemy
                 animator.SetBool("idle", true);
             }else{
                 if(Time.time > (nextAction - 0.20)){
-                    hitbox.SetActive(true);
+                    hitbox.Enable();
                 }
             }
         }
