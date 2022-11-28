@@ -25,7 +25,7 @@ public class PlayerManager : Damageable
     public float rollCoolDown = 4f;
 
     // Angle of aim assist amount
-    public float aimAssistAngle = 25f;
+    public float aimAssistAngle = 30f;
 
     // Indicates if the player is using a gamepad (otherwise keyboard)
     private bool usingGamepad = false;
@@ -132,6 +132,7 @@ public class PlayerManager : Damageable
         lastRoll = 0f;
         reloading = false;
 
+        aimAssistAngle /= 2;
         aimAssistFilter = new();
         aimAssistFilter.useTriggers = true;
         aimAssistFilter.useLayerMask = true;
@@ -283,6 +284,11 @@ public class PlayerManager : Damageable
     // Update the current weapon state for aiming and firing
     private void UpdateWeaponState()
     {
+        if (WeaponInventory.WeaponCount <= 0)
+        {
+            return;
+        }
+
         // Aim weapon
         if (usingGamepad)
         {
@@ -445,10 +451,12 @@ public class PlayerManager : Damageable
         if (user.controlScheme.Value.name == "Gamepad")
         {
             usingGamepad = true;
+            UISystem.Inst.HideCursor();
         }
         else
         {
             usingGamepad = false;
+            UISystem.Inst.ShowCursor();
         }
     }
 }
