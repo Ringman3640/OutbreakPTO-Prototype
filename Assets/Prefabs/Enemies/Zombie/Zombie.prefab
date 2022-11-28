@@ -112,7 +112,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3181486184915063786}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3146791721418637032
 MonoBehaviour:
@@ -251,7 +251,7 @@ MonoBehaviour:
   - {x: 0.1559433, y: -0.12507851, z: 0}
   m_ShapePathHash: 1376537051
   m_Mesh: {fileID: 0}
-  m_InstanceId: 60670
+  m_InstanceId: 52882
 --- !u!1 &4843955850782383330
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,6 +312,7 @@ GameObject:
   - component: {fileID: 8685259684129863149}
   - component: {fileID: 3780616488111592053}
   - component: {fileID: 7116287107918255531}
+  - component: {fileID: 1194430256336277361}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -332,7 +333,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3181486184915063786}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8685259684129863149
 SpriteRenderer:
@@ -354,7 +355,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: e3102ae3bc9ca9941a64ba347b9235c4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -421,6 +422,22 @@ MonoBehaviour:
   actorName: zombie
   sr: {fileID: 8685259684129863149}
   anim: {fileID: 3780616488111592053}
+--- !u!114 &1194430256336277361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5355958709009917722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a7f77bdc1701941b127f8f016b1537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteList:
+  - {fileID: 8685259684129863149}
+  defaultFlashColor: {r: 1, g: 0, b: 0, a: 0.5019608}
+  defaultFlashDuration: 0.1
 --- !u!1 &6439924016967085330
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,6 +594,7 @@ GameObject:
   - component: {fileID: 7410244785489951000}
   - component: {fileID: 9145530109666001149}
   - component: {fileID: 1929553192398791981}
+  - component: {fileID: 6970173131289175054}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Enemy
@@ -596,8 +614,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9036939955019511644}
   - {fileID: 3860612574038885780}
+  - {fileID: 9036939955019511644}
   - {fileID: 1320757965322002861}
   - {fileID: 7989935701376701945}
   - {fileID: 5798281834187869234}
@@ -652,6 +670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 50
   rb: {fileID: 7410244785489951000}
+  se: {fileID: 1194430256336277361}
   alertTrigger: {fileID: 6439924016967085330}
   playerAlertSignal: {fileID: 8395144913853656140, guid: 18f7ca048d9c17f4e9b2630a21c61ff1, type: 3}
   effectsList:
@@ -685,3 +704,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af0fe7c72e298f9448f565b8333b9ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6970173131289175054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7831216371223491407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f5e296adc10224797de5954fa614df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unloadDistance: 16
+  autoUnload: 1

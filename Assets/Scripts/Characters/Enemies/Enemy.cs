@@ -19,6 +19,9 @@ public abstract class Enemy : Damageable
     protected Rigidbody2D rb;
 
     [SerializeField]
+    protected SpriteEffects se;
+
+    [SerializeField]
     private GameObject alertTrigger;
 
     [SerializeField]
@@ -73,6 +76,7 @@ public abstract class Enemy : Damageable
 
         rb = GetComponent<Rigidbody2D>();
         Assert.IsNotNull(rb);
+        Assert.IsNotNull(se);
         Assert.IsNotNull(alertTrigger);
         Assert.IsNotNull(playerAlertSignal);
 
@@ -107,6 +111,7 @@ public abstract class Enemy : Damageable
     public override void RecieveDamage(HitboxData damageInfo, GameObject collider = null)
     {
         currHealth -= damageInfo.Damage;
+        se.PlayFlash();
 
         switch (damageInfo.Type)
         {
