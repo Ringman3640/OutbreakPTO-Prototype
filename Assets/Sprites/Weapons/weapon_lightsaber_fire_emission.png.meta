@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2dec358d207547143bea115a79ad9974
+guid: 1bf8a93c9c48d5848a37a7adc0b24894
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -53,7 +53,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 8
+  textureType: 0
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: weapon_lightsaber_fire_0
+      name: weapon_lightsaber_fire_emission_0
       rect:
         serializedVersion: 2
         x: 0
@@ -125,20 +125,20 @@ TextureImporter:
         width: 128
         height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a794802cdbb847348bfe06e3662d8ee5
-      internalID: 1940002265
+      spriteID: 3551bce749c860a4f8d9dbcd8111e119
+      internalID: 1505022256
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: weapon_lightsaber_fire_1
+      name: weapon_lightsaber_fire_emission_1
       rect:
         serializedVersion: 2
         x: 128
@@ -146,20 +146,20 @@ TextureImporter:
         width: 128
         height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9a809ed1f49efd478e4dd701c598b7f
-      internalID: 795889063
+      spriteID: 77bb86fadd4aa024c91a0e03872fc97f
+      internalID: 924227490
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: weapon_lightsaber_fire_2
+      name: weapon_lightsaber_fire_emission_2
       rect:
         serializedVersion: 2
         x: 256
@@ -167,20 +167,20 @@ TextureImporter:
         width: 128
         height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8136d79fef4a29448dbfc526cf7e2e2
-      internalID: 727629295
+      spriteID: 8c29b82a03d8adc47baf33ad82bcbd76
+      internalID: 1037970155
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: weapon_lightsaber_fire_3
+      name: weapon_lightsaber_fire_emission_3
       rect:
         serializedVersion: 2
         x: 384
@@ -188,20 +188,20 @@ TextureImporter:
         width: 128
         height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61fa07aeee6c32c459b821f901735e09
-      internalID: -323241743
+      spriteID: fefbb37a3c935324e9ede06e774c78a2
+      internalID: 246697233
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: weapon_lightsaber_fire_4
+      name: weapon_lightsaber_fire_emission_4
       rect:
         serializedVersion: 2
         x: 0
@@ -209,20 +209,20 @@ TextureImporter:
         width: 128
         height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27e01816c6c89ba4b8af94cd1d7b7fca
-      internalID: -872701968
+      spriteID: 2af8ec79a30c6634ca62fcd174675a81
+      internalID: 5979387
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: weapon_lightsaber_fire_5
+      name: weapon_lightsaber_fire_emission_5
       rect:
         serializedVersion: 2
         x: 128
@@ -230,20 +230,20 @@ TextureImporter:
         width: 128
         height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1e29e794237e9c4bbf55e5f7c8337fe
-      internalID: 1208746487
+      spriteID: c08c7f556d767e74b9fd014111c4d7f7
+      internalID: -4775404
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: weapon_lightsaber_fire_6
+      name: weapon_lightsaber_fire_emission_6
       rect:
         serializedVersion: 2
         x: 256
@@ -251,14 +251,14 @@ TextureImporter:
         width: 128
         height: 96
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a062d565dd04b2b45b9ebf819db8f6c9
-      internalID: -185209225
+      spriteID: 57955eeee60f4494b982954db230e757
+      internalID: -1219434557
       vertices: []
       indices: 
       edges: []
@@ -272,17 +272,15 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures:
-    - texture: {fileID: 2800000, guid: 1bf8a93c9c48d5848a37a7adc0b24894, type: 3}
-      name: _Emission
+    secondaryTextures: []
     nameFileIdTable:
-      weapon_lightsaber_fire_3: -323241743
-      weapon_lightsaber_fire_2: 727629295
-      weapon_lightsaber_fire_5: 1208746487
-      weapon_lightsaber_fire_1: 795889063
-      weapon_lightsaber_fire_0: 1940002265
-      weapon_lightsaber_fire_4: -872701968
-      weapon_lightsaber_fire_6: -185209225
+      weapon_lightsaber_fire_emission_1: 924227490
+      weapon_lightsaber_fire_emission_6: -1219434557
+      weapon_lightsaber_fire_emission_5: -4775404
+      weapon_lightsaber_fire_emission_2: 1037970155
+      weapon_lightsaber_fire_emission_0: 1505022256
+      weapon_lightsaber_fire_emission_3: 246697233
+      weapon_lightsaber_fire_emission_4: 5979387
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

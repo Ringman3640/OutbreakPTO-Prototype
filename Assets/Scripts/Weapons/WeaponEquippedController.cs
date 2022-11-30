@@ -241,13 +241,13 @@ public class WeaponEquippedController : MonoBehaviour
         wsm.SortOrder = pivotData.LayerOrder;
     }
 
-    public void Enable()
+    public virtual void Enable()
     {
         weaponEnabled = true;
         wsm.Visible = true;
     }
 
-    public void Disable()
+    public virtual void Disable()
     {
         weaponEnabled = false;
         orientation = WeaponOrientation.Invalid;

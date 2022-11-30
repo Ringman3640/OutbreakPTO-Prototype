@@ -8,11 +8,27 @@ public class LightsaberEquippedController : WeaponEquippedController
     [SerializeField]
     private Hitbox hitbox;
 
+    [SerializeField]
+    private GameObject saberLight;
+
     protected override void Awake()
     {
         base.Awake();
 
         Assert.IsNotNull(hitbox);
+        Assert.IsNotNull(saberLight);
+    }
+
+    // Aim the weapon towards the given direction
+    public override void Aim(Vector2 aimDirection)
+    {
+        if (!weaponEnabled)
+        {
+            return;
+        }
+
+        SetDirection(aimDirection);
+        saberLight.transform.position = (Vector2)holder.transform.position + aimDirection;
     }
 
     // Aim the weapon towards the given point.
@@ -61,5 +77,21 @@ public class LightsaberEquippedController : WeaponEquippedController
     private void OnDisable()
     {
         hitbox.Disable();
+    }
+
+    public override void Enable()
+    {
+        base.Enable();
+
+        saberLight.SetActive(true);
+    }
+
+    public override void Disable()
+    {
+        base.Disable();
+
+        transform.localPosition = Vector3.zero;
+        saberLight.transform.localPosition = new Vector2(0.5f, 0.5f);
+        saberLight.SetActive(false);
     }
 }
