@@ -34,6 +34,7 @@ public class PlayerSystem : MonoBehaviour
 
         player = inPlayer;
         UISystem.Inst.ShowUI();
+        UISystem.Inst.UpdateHealthBar();
     }
 
     public void RemovePlayer()
