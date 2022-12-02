@@ -8,6 +8,8 @@ public class DebugSystem : MonoBehaviour
     private static DebugSystem instance;
 
     public GameObject spawnObject;
+    public BossTentacleAttackSpawner tentacleSpawner;
+    public int tentacleSpawnCount = 1;
 
     private float reloadPauseStart;
 
@@ -55,6 +57,18 @@ public class DebugSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F1))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        // Spawn tentacle
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            tentacleSpawner.Spawn(tentacleSpawnCount);
+        }
+
+        // Spawn tentacle wave
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            tentacleSpawner.SpawnWave();
         }
     }
 

@@ -32,6 +32,25 @@ public class BossTentacleAttackController : MonoBehaviour
     [SerializeField]
     private TentacleOrientation orientation = TentacleOrientation.DownRight;
 
+    private float startDelaySeconds = 0f;
+    private bool initialized = false;
+
+    // Properties
+    public TentacleOrientation Orientation
+    {
+        get { return orientation; }
+        set 
+        {
+            orientation = value;
+            Initialize();
+        }
+    }
+    public float StartDelaySeconds
+    {
+        get { return startDelaySeconds; }
+        set { startDelaySeconds = value; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +61,30 @@ public class BossTentacleAttackController : MonoBehaviour
 
         hitboxDown.Damage = damage;
         hitboxUp.Damage = damage;
+    }
+
+    // Update is used to initialize the tentacle if not initalized yet
+    void Update()
+    {
+        Initialize();
+        enabled = false;
+    }
+
+    public void Initialize()
+    {
+        if (initialized)
+        {
+            return;
+        }
+
+        initialized = true;
+        StartCoroutine(InitializeCoroutine());
+    }
+
+    private IEnumerator InitializeCoroutine()
+    {
+        // Start delay
+        yield return new WaitForSeconds(startDelaySeconds);
 
         if (orientation == TentacleOrientation.Auto)
         {
@@ -49,7 +92,7 @@ public class BossTentacleAttackController : MonoBehaviour
             if (player == null)
             {
                 Destroy(gameObject);
-                return;
+                yield break;
             }
 
             Vector2 directionToPlayer = player.transform.position - transform.position;
