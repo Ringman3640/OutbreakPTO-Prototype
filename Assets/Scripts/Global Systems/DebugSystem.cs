@@ -13,6 +13,8 @@ public class DebugSystem : MonoBehaviour
 
     private float reloadPauseStart;
 
+    private bool cameraZoomedOut = false;
+
     public static DebugSystem Instance
     {
         get { return instance; }
@@ -69,6 +71,21 @@ public class DebugSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Y))
         {
             tentacleSpawner.SpawnWave();
+        }
+
+        // Toggle camera size
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (cameraZoomedOut)
+            {
+                GameSystem.Inst.CameraControl.ChangeCameraSizeScale(ZoomLevel.Normal);
+                cameraZoomedOut = false;
+            }
+            else
+            {
+                GameSystem.Inst.CameraControl.ChangeCameraSizeScale(ZoomLevel.ZoomOut2);
+                cameraZoomedOut = true;
+            }
         }
     }
 

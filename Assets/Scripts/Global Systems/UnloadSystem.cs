@@ -36,11 +36,13 @@ public class UnloadSystem : MonoBehaviour
         }
 
         Vector2Int playerPos = Vector2Int.RoundToInt(player.transform.position);
+        float cameraZoomScale = GameSystem.Inst.CameraControl.SizeScale;
 
         LinkedListNode<Unloadable> curr = unloadedList.First;
         while (curr != null)
         {
             Unloadable currVal = curr.Value;
+            int scaledUnloadDist = (int)(currVal.UnloadDistance * cameraZoomScale);
             if ((playerPos - currVal.UnloadedPosition).sqrMagnitude < currVal.UnloadDistance * currVal.UnloadDistance)
             {
                 currVal.Reload();
