@@ -1,6 +1,6 @@
-# OutbreakPTO-Prototype
+# Outbreak-PTO-Mechanics-Build
 
-too lazy to write description todo: add description
+This repository contains the mechanics scene for [Outbreak-PTO](https://github.com/marlinism/385Project). The main gameplay systems were first implemented through this repo and subsequently merged with the main project repo. This build does not represent the final game. 
 
 Play the WebGL build [here](https://ringman3640.github.io/OutbreakPTO-Prototype/Build/WebGL/).
 
